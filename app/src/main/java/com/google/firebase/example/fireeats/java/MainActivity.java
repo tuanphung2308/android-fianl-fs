@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.firebase.ui.auth.AuthUI;
@@ -31,7 +32,9 @@ import com.google.firebase.example.fireeats.java.model.Rating;
 import com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails;
 import com.google.firebase.example.fireeats.java.util.RatingUtil;
 import com.google.firebase.example.fireeats.java.util.RestaurantUtil;
+import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
+import com.google.firebase.example.fireeats.java.widget.SpacingItemDecoration;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -108,8 +111,9 @@ public class MainActivity extends AppCompatActivity implements
                         "Error: check logs for info.", Snackbar.LENGTH_LONG).show();
             }
         };
-
-        mBinding.recyclerRestaurants.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerRestaurants.setLayoutManager(new GridLayoutManager(this, 2));
+        mBinding.recyclerRestaurants.addItemDecoration(new SpacingItemDecoration(2, Tools.dpToPx(this, 8), true));
+        mBinding.recyclerRestaurants.setHasFixedSize(true);
         mBinding.recyclerRestaurants.setAdapter(mAdapter);
 
         // Filter Dialog
@@ -201,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
 //        Intent intent = new Intent(this, RestaurantDetailActivity.class);
         intent.putExtra(RestaurantDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
-
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }

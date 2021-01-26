@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_view"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_10"
@@ -14,9 +15,31 @@
         <include layout="@layout/toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:id="@+id/viewEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="UseCompoundDrawables"
+        tools:visibility="gone">
 
+        <!--        <ImageView-->
+        <!--            android:src="@drawable/pizza_monster"  android:layout_height="wrap_content"/>-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_no_results"
+            android:textColor="@color/grey_60" />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerRestaurants"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

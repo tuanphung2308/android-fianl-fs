@@ -13,7 +13,6 @@
         <activity
             android:name=".java.MainActivity"
             android:theme="@style/AppTheme.Activity">
-
         </activity>
 
         <activity
