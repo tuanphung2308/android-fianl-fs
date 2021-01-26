@@ -59,10 +59,14 @@ public class RestaurantUtil {
         int[] prices = new int[]{1, 2, 3};
 
         product.setName(getRandomName(random));
-        product.setCity(getRandomString(cities, random));
+        product.setSubcategory(getRandomString(cities, random));
         product.setCategory(getRandomString(categories, random));
         product.setPhoto(getRandomImageUrl(random));
-        product.setPrice(getRandomInt(prices, random));
+        product.setPhoto1(getRandomImageUrl(random));
+        product.setPhoto2(getRandomImageUrl(random));
+        product.setPhoto3(getRandomImageUrl(random));
+        product.setPhoto4(getRandomImageUrl(random));
+        product.setPrice(getRandomInt(prices, random) * 10000);
         product.setNumRatings(random.nextInt(20));
         product.setDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
 

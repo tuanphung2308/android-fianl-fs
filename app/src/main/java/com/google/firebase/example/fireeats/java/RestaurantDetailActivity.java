@@ -136,7 +136,7 @@ public class RestaurantDetailActivity extends AppCompatActivity
         mBinding.restaurantName.setText(product.getName());
         mBinding.restaurantRating.setRating((float) product.getAvgRating());
         mBinding.restaurantNumRatings.setText(getString(R.string.fmt_num_ratings, product.getNumRatings()));
-        mBinding.restaurantCity.setText(product.getCity());
+        mBinding.restaurantCity.setText(product.getSubcategory());
         mBinding.restaurantCategory.setText(product.getCategory());
         mBinding.restaurantPrice.setText(RestaurantUtil.getPriceString(product));
 

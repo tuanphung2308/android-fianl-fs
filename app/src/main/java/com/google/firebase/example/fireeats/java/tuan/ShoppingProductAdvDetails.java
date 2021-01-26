@@ -1,22 +1,22 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.example.fireeats.R;
@@ -30,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
 public class ShoppingProductAdvDetails extends AppCompatActivity
-        implements EventListener<DocumentSnapshot>{
+        implements EventListener<DocumentSnapshot> {
 
     private static final String TAG = "RestaurantDetail";
 
@@ -47,13 +47,6 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
             R.id.fab_color_pink,
             R.id.fab_color_grey,
             R.id.fab_color_green
-    };
-
-    private static int[] array_size_bt = {
-            R.id.bt_size_s,
-            R.id.bt_size_m,
-            R.id.bt_size_l,
-            R.id.bt_size_xl
     };
 
     @Override
@@ -118,19 +111,42 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
     private void onRestaurantLoaded(Product product) {
         TextView product_name_textview = (TextView) findViewById(R.id.product_name_textview);
         product_name_textview.setText(product.getName());
+
         TextView categoryTextView = (TextView) findViewById(R.id.categoryTextView);
-        product_name_textview.setText(product.getCategory());
-//        mBinding.restaurantName.setText(restaurant.getName());
-//        mBinding.restaurantRating.setRating((float) restaurant.getAvgRating());
-//        mBinding.restaurantNumRatings.setText(getString(R.string.fmt_num_ratings, restaurant.getNumRatings()));
-//        mBinding.restaurantCity.setText(restaurant.getCity());
-//        mBinding.restaurantCategory.setText(restaurant.getCategory());
-//        mBinding.restaurantPrice.setText(RestaurantUtil.getPriceString(restaurant));
-//
-//        // Background image
-//        Glide.with(mBinding.restaurantImage.getContext())
-//                .load(restaurant.getPhoto())
-//                .into(mBinding.restaurantImage);
+        categoryTextView.setText(product.getSubcategory() + " - " + product.getCategory());
+        TextView priceTextView = (TextView) findViewById(R.id.price);
+        priceTextView.setText("VND " + String.valueOf(product.getPrice()));
+        TextView productDescription = (TextView) findViewById(R.id.productDescription);
+        productDescription.setText(product.getDescription());
+
+        AppCompatRatingBar ratingBar =  (AppCompatRatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setRating((float) product.getAvgRating());
+
+        TextView ratingCount = findViewById(R.id.ratingCount);
+        ratingCount.setText(String.valueOf(product.getNumRatings()) + " ratings");
+
+        ImageView restaurantImage = findViewById(R.id.restaurantImage);
+        ImageView image1 = findViewById(R.id.image_1);
+        ImageView image2 = findViewById(R.id.image_2);
+        ImageView image3 = findViewById(R.id.image_3);
+        ImageView image4 = findViewById(R.id.image_4);
+
+        // Background image
+        Glide.with(restaurantImage.getContext())
+                .load(product.getPhoto())
+                .into(restaurantImage);
+        Glide.with(image1.getContext())
+                .load(product.getPhoto())
+                .into(image1);
+        Glide.with(image2.getContext())
+                .load(product.getPhoto())
+                .into(image2);
+        Glide.with(image3.getContext())
+                .load(product.getPhoto())
+                .into(image3);
+        Glide.with(image4.getContext())
+                .load(product.getPhoto())
+                .into(image4);
     }
 
     private void initToolbar() {
@@ -170,33 +186,12 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
             }
         });
 
-        ((AppCompatButton) findViewById(R.id.bt_add_to_wishlist)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(parent_view, "Add to Wishlist", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
         ((AppCompatButton) findViewById(R.id.bt_add_to_cart)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Snackbar.make(parent_view, "Add to Cart", Snackbar.LENGTH_SHORT).show();
             }
         });
-    }
-
-
-    public void setSize(View v) {
-        Button bt = (Button) v;
-        bt.setEnabled(false);
-        bt.setTextColor(Color.WHITE);
-        for (int id : array_size_bt) {
-            if (v.getId() != id) {
-                Button bt_unselect = (Button) findViewById(id);
-                bt_unselect.setEnabled(true);
-                bt_unselect.setTextColor(Color.BLACK);
-            }
-        }
     }
 
     public void setColor(View v) {

@@ -70,7 +70,7 @@ public class RestaurantAdapter extends FirestoreAdapter<RestaurantAdapter.ViewHo
 
             binding.restaurantItemName.setText(product.getName());
             binding.restaurantItemRating.setRating((float) product.getAvgRating());
-            binding.restaurantItemCity.setText(product.getCity());
+            binding.restaurantItemCity.setText(product.getSubcategory());
             binding.restaurantItemCategory.setText(product.getCategory());
             binding.restaurantItemNumRatings.setText(resources.getString(R.string.fmt_num_ratings,
                     product.getNumRatings()));

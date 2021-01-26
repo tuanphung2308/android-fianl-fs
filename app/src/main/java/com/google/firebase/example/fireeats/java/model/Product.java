@@ -8,7 +8,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Product {
 
-    public static final String FIELD_CITY = "city";
+    public static final String FIELD_CITY = "subcategory";
     public static final String FIELD_CATEGORY = "category";
     public static final String FIELD_PRICE = "price";
     public static final String FIELD_POPULARITY = "numRatings";
@@ -16,9 +16,13 @@ public class Product {
     public static final String FIELD_DESCRIPTION = "description";
 
     private String name;
-    private String city;
+    private String subcategory;
     private String category;
     private String photo;
+    private String photo1;
+    private String photo2;
+    private String photo3;
+    private String photo4;
     private String description;
     private int price;
     private int numRatings;
@@ -26,16 +30,19 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, String city, String category, String photo,
-                   int price, int numRatings, double avgRating, String description) {
+    public Product(String name, String subcategory, String category, String photo, String photo1, String photo2, String photo3, String photo4, String description, int price, int numRatings, double avgRating) {
         this.name = name;
-        this.city = city;
+        this.subcategory = subcategory;
         this.category = category;
         this.photo = photo;
+        this.photo1 = photo1;
+        this.photo2 = photo2;
+        this.photo3 = photo3;
+        this.photo4 = photo4;
+        this.description = description;
         this.price = price;
         this.numRatings = numRatings;
         this.avgRating = avgRating;
-        this.description = description;
     }
 
     public String getName() {
@@ -46,12 +53,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getSubcategory() {
+        return subcategory;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
     public String getCategory() {
@@ -100,5 +107,37 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPhoto1() {
+        return photo1;
+    }
+
+    public void setPhoto1(String photo1) {
+        this.photo1 = photo1;
+    }
+
+    public String getPhoto2() {
+        return photo2;
+    }
+
+    public void setPhoto2(String photo2) {
+        this.photo2 = photo2;
+    }
+
+    public String getPhoto3() {
+        return photo3;
+    }
+
+    public void setPhoto3(String photo3) {
+        this.photo3 = photo3;
+    }
+
+    public String getPhoto4() {
+        return photo4;
+    }
+
+    public void setPhoto4(String photo4) {
+        this.photo4 = photo4;
     }
 }
