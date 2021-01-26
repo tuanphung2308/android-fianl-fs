@@ -23,6 +23,7 @@ import java.util.List;
 public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private AdapterGridShopCategory mAdapter;
+    private static final String KEY_CATEGORY_ID = "CATEGORY";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onItemClick(View view, ShopCategory obj, int position) {
                 Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
-                intent.putExtra("fuck you", "fuck");
+
+                intent.putExtra(KEY_CATEGORY_ID, obj.title);
                 startActivity(intent);
             }
         });

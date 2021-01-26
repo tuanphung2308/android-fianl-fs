@@ -65,7 +65,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         mFirestore = FirebaseFirestore.getInstance();
 
         // Get reference to the restaurant
-        mRestaurantRef = mFirestore.collection("restaurants").document(restaurantId);
+        mRestaurantRef = mFirestore.collection("products").document(restaurantId);
 
         initToolbar();
         initComponent();

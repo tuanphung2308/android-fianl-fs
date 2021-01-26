@@ -16,9 +16,6 @@
         </activity>
 
         <activity
-            android:name=".java.RestaurantDetailActivity"
-            android:theme="@style/AppTheme.Activity" />
-        <activity
             android:name=".java.tuan.ShoppingProductGrid"
             android:theme="@style/AppTheme.Activity" />
         <activity android:name=".java.tuan.BottomNavigationSmall">

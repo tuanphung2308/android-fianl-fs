@@ -14,14 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.example.fireeats.R;
-import com.google.firebase.example.fireeats.databinding.ActivityMainBinding;
-import com.google.firebase.example.fireeats.java.RestaurantDetailActivity;
-import com.google.firebase.example.fireeats.java.adapter.AdapterGridShopProductCard;
 import com.google.firebase.example.fireeats.java.adapter.RestaurantAdapter;
-import com.google.firebase.example.fireeats.java.data.DataGenerator;
-import com.google.firebase.example.fireeats.java.model.ShopProduct;
+import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.example.fireeats.java.widget.SpacingItemDecoration;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,11 +24,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
-import java.util.List;
+import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails.KEY_RESTAURANT_ID;
 
 public class ShoppingProductGrid extends AppCompatActivity
         implements RestaurantAdapter.OnRestaurantSelectedListener {
 
+    private static final String KEY_CATEGORY_ID = "CATEGORY";
     private View parent_view;
 
     private RecyclerView recyclerView;
@@ -51,13 +47,16 @@ public class ShoppingProductGrid extends AppCompatActivity
         RecyclerView recyclerRestaurants = findViewById(R.id.recyclerRestaurants);
         LinearLayout viewEmpty = findViewById(R.id.viewEmpty);
 
+        // Get restaurant ID from extras
+        String category = getIntent().getExtras().getString(KEY_CATEGORY_ID);
+
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
         // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("restaurants");
+        mQuery = mFirestore.collection("products").whereEqualTo(Product.FIELD_CATEGORY, category);;
 
         // RecyclerView
         mAdapter = new RestaurantAdapter(mQuery, this) {
@@ -136,7 +135,7 @@ public class ShoppingProductGrid extends AppCompatActivity
         // Go to the details page for the selected restaurant
         Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
 //        Intent intent = new Intent(this, RestaurantDetailActivity.class);
-        intent.putExtra(RestaurantDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
+        intent.putExtra(KEY_RESTAURANT_ID, restaurant.getId());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }

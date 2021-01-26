@@ -3,33 +3,59 @@ package com.google.firebase.example.fireeats.java.tuan;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.BottomBarAdapter;
 import com.google.firebase.example.fireeats.java.adapter.NoSwipePager;
+import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.utils.Tools;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.MetadataChanges;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class BottomNavigationSmall extends AppCompatActivity {
-
+public class BottomNavigationSmall extends AppCompatActivity implements EventListener<DocumentSnapshot>  {
     private ImageView[] menu_nav;
     private View notif_badge;
-
+    private FirebaseFirestore mFirestore;
+    private DocumentReference mCartRef;
     private NoSwipePager viewPager;
     private BottomBarAdapter pagerAdapter;
     private int notification_count = -1;
     private ActionBar actionBar;
     private Toolbar toolbar;
+    private ListenerRegistration mCartRegistration;
 
     HomeFragment frag1 = new HomeFragment();
     CategoryFragment frag2 = new CategoryFragment();
@@ -40,6 +66,20 @@ public class BottomNavigationSmall extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_small);
+
+        // Firestore
+        mFirestore = FirebaseFirestore.getInstance();
+
+        // Enable Firestore logging
+        FirebaseFirestore.setLoggingEnabled(true);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            Log.d("Signed in", user.getUid());
+            // Get reference to the restaurant
+            mCartRef = mFirestore.collection("carts").document(user.getUid());
+        }
 
         //optimisation
         viewPager = findViewById(R.id.viewPager);
@@ -67,6 +107,23 @@ public class BottomNavigationSmall extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         Tools.setSystemBarColor(this, R.color.grey_5);
         Tools.setSystemBarLight(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mCartRegistration = mCartRef.addSnapshotListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (mCartRegistration != null) {
+            mCartRegistration.remove();
+            mCartRegistration = null;
+        }
     }
 
     private void initComponent() {
@@ -199,6 +256,51 @@ public class BottomNavigationSmall extends AppCompatActivity {
             notif_badge.setVisibility(View.GONE);
         } else {
             notif_badge.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Listener for the Restaurant document ({@link #mCartRef}).
+     */
+    @Override
+    public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
+        if (e != null) {
+            Log.w("XD", "cart:onEvent", e);
+            return;
+        }
+
+        onCartLoaded(snapshot.toObject(Cart.class));
+    }
+
+
+    private void onCartLoaded(Cart cart) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (cart == null) {
+            Map<String, Object> cartMap = new HashMap<>();
+            cartMap.put("Fuck", "off");
+            mFirestore.collection("carts").document(user.getUid())
+                    .set(cartMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("xd", "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("xd", "Error writing document", e);
+                        }
+                    });
+            // No user is signed in
+        } else {
+            Map<String, Object> data = new HashMap<>();
+            data.put("capital", true);
+
+            mFirestore.collection("carts").document(user.getUid())
+                    .set(data, SetOptions.merge());
+            Log.d("XD", "cart is not null");
         }
     }
 }

@@ -4,7 +4,7 @@ set -e
 
 #delete the restaurants collection
 echo "Deleting the restaurants collection under project"
-firebase firestore:delete "restaurants" -r -y --project="$PROJECT_ID"
+firebase firestore:delete "products" -r -y --project="$PROJECT_ID"
 
 #create a test account test@mailinator.com
 echo "Creating test accounts"

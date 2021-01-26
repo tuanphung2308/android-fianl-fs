@@ -24,9 +24,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.databinding.ActivityMainBinding;
 import com.google.firebase.example.fireeats.java.adapter.RestaurantAdapter;
+import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.model.Rating;
 import com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails;
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements
         mFirestore = FirebaseFirestore.getInstance();
 
         // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("restaurants")
+        mQuery = mFirestore.collection("products")
                 .orderBy("avgRating", Query.Direction.DESCENDING)
                 .limit(LIMIT);
 
@@ -204,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements
         // Go to the details page for the selected restaurant
         Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
 //        Intent intent = new Intent(this, RestaurantDetailActivity.class);
-        intent.putExtra(RestaurantDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
+        intent.putExtra(ShoppingProductAdvDetails.KEY_RESTAURANT_ID, restaurant.getId());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
@@ -212,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onFilter(Filters filters) {
         // Construct query basic query
-        Query query = mFirestore.collection("restaurants");
+        Query query = mFirestore.collection("products");
 
         // Category (equality filter)
         if (filters.hasCategory()) {
@@ -269,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements
         // Add a bunch of random restaurants
         WriteBatch batch = mFirestore.batch();
         for (int i = 0; i < 10; i++) {
-            DocumentReference restRef = mFirestore.collection("restaurants").document();
+            DocumentReference restRef = mFirestore.collection("products").document();
 
             // Create random restaurant / ratings
             Product randomProduct = RestaurantUtil.getRandom(this);
