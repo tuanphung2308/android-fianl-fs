@@ -13,16 +13,22 @@
         <activity
             android:name=".java.MainActivity"
             android:theme="@style/AppTheme.Activity">
+
+        </activity>
+
+        <activity
+            android:name=".java.RestaurantDetailActivity"
+            android:theme="@style/AppTheme.Activity" />
+        <activity
+            android:name=".java.tuan.ShoppingProductGrid"
+            android:theme="@style/AppTheme.Activity" />
+        <activity android:name=".java.tuan.BottomNavigationSmall">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".java.RestaurantDetailActivity"
-            android:theme="@style/AppTheme.Activity" />
         <activity
             android:name=".java.tuan.ShoppingProductAdvDetails"
             android:screenOrientation="portrait" />
