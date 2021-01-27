@@ -221,6 +221,11 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
                         if (!foundProduct) {
                             cartObjectsCurrent.add(cartObject);
                         }
+                        int total = 0;
+                        for (CartObject co : currentCart.getCartObjectList()) {
+                            total += co.getQuantity() * co.getProduct().getPrice();
+                        }
+                        transaction.update(sfDocRef, "total", total);
                         transaction.update(sfDocRef, "cartObjectList", cartObjectsCurrent);
                         return currentCart;
                     }

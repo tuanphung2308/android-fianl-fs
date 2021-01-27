@@ -31,8 +31,9 @@
         <activity
             android:name=".java.tuan.ShoppingProductAdvDetails"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".java.CartActivity"
+            android:name=".java.tuan.ShoppingCheckoutStep"
             android:screenOrientation="portrait">
         </activity>
     </application>

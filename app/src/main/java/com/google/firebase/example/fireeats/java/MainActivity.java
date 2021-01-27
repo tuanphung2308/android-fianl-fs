@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements
             return;
         } else {
             Map<String, Object> data = new HashMap<>();
+            data.put("total", 0);
             data.put("cartObjectList", new ArrayList<>());
 
             mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())

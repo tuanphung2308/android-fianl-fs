@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -23,14 +25,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.CartObjectAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.CartObject;
+import com.google.firebase.example.fireeats.java.tuan.adapters.OnTotalUpdate;
 import com.google.firebase.example.fireeats.java.utils.Tools;
-import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
 public class ShoppingCartSimple extends AppCompatActivity {
+
     private DocumentReference cartRef;
     private CartObjectAdapter cartObjectAdapter;
     private RecyclerView recyclerView;
@@ -50,7 +56,25 @@ public class ShoppingCartSimple extends AppCompatActivity {
 
         cartRef = mFirestore.collection("carts").document(user.getUid());
         recyclerView = findViewById(R.id.recyclerCartObjects);
+        cartRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
 
+                if (snapshot != null && snapshot.exists()) {
+                    Cart currentCart = snapshot.toObject(Cart.class);
+                    Log.d(TAG, "Current total: " + currentCart.getTotal());
+                    TextView totalTextView = findViewById(R.id.totalTextView);
+                    totalTextView.setText("VND " + String.valueOf(currentCart.getTotal()));
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
         cartRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

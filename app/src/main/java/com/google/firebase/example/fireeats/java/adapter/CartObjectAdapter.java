@@ -1,6 +1,5 @@
 package com.google.firebase.example.fireeats.java.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.CartObject;
+import com.google.firebase.example.fireeats.java.tuan.adapters.OnTotalUpdate;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -123,6 +123,7 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                     viewHolder.getPriceText().setText("VND " + String.valueOf(quantity * cartObjectList.get(position).getProduct().getPrice()));
                     viewHolder.getQuantityText().setText(String.valueOf(quantity));
                     CartObject cartObject = cartObjectList.get(position);
+
                     mFirestore.runTransaction(new Transaction.Function<Cart>() {
                         @Override
                         public Cart apply(Transaction transaction) throws FirebaseFirestoreException {
@@ -139,6 +140,11 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                             if (!foundProduct) {
                                 cartObjectsCurrent.add(cartObject);
                             }
+                            int total = 0;
+                            for (CartObject co : cartObjectsCurrent) {
+                                total += co.getQuantity() * co.getProduct().getPrice();
+                            }
+                            transaction.update(sfDocRef, "total", total);
                             transaction.update(sfDocRef, "cartObjectList", cartObjectsCurrent);
                             return currentCart;
                         }
@@ -168,8 +174,6 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     final DocumentReference sfDocRef = mFirestore.collection("carts").document(user.getUid());
                     int quantity = Integer.parseInt((String) viewHolder.getQuantityText().getText());
-                    CartObject cartObject = cartObjectList.get(position);
-
                     if (quantity >= 1) {
                         quantity = quantity - 1;
                         if (quantity == 0) {
@@ -188,6 +192,12 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                                     public Cart apply(Transaction transaction) throws FirebaseFirestoreException {
                                         DocumentSnapshot snapshot = transaction.get(sfDocRef);
                                         Cart currentCart = snapshot.toObject(Cart.class);
+
+                                        int total = 0;
+                                        for (CartObject co : cartObjectList) {
+                                            total += co.getQuantity() * co.getProduct().getPrice();
+                                        }
+                                        transaction.update(sfDocRef, "total", total);
                                         transaction.update(sfDocRef, "cartObjectList", cartObjectList);
                                         return currentCart;
                                     }
@@ -203,6 +213,7 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                                     }
                                 });
                     }
+//                    onTotalUpdate.updateTotalPrice();
                     return;
                 } catch (NumberFormatException e) {
                     return;
@@ -216,7 +227,5 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
     public int getItemCount() {
         return cartObjectList.size();
     }
-
-
 }
 
