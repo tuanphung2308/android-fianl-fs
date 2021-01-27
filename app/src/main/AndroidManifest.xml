@@ -17,7 +17,7 @@
         <activity
             android:name=".java.tuan.ShoppingProductGrid"
             android:theme="@style/AppTheme.Activity" />
-        <activity android:name=".java.tuan.BottomNavigationSmall">
+        <activity android:name=".java.tuan.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

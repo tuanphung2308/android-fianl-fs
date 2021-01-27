@@ -23,6 +23,7 @@ import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.CartObjectAdapter;
 import com.google.firebase.example.fireeats.java.adapter.ConfirmationCartObjectAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.Order;
 import com.google.firebase.example.fireeats.java.tuan.adapters.OnPaymentDetailSubmit;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +32,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
-public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSubmit {
+public class FragmentConfirmation extends Fragment implements OnPaymentDetailSubmit {
+
+    private Order order = new Order();
+
+    public Order getOrder() {
+        return order;
+    }
 
     private DocumentReference cartRef;
     private ConfirmationCartObjectAdapter cartObjectAdapter;
@@ -54,7 +61,6 @@ public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSu
         mFirestore = FirebaseFirestore.getInstance();
         RadioGroup radioGroup = root.findViewById(R.id.radioGroup);
 
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -73,11 +79,13 @@ public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSu
                     case R.id.standard_delivery:
                         //Implement logic
                         totalCurrent += 20000;
+                        order.setTotalIncShipping(totalCurrent);
                         totalOrderTextView.setText("VND " + String.valueOf(totalCurrent));
                         break;
                     case R.id.express_delivery:
                         //Implement logic
                         totalCurrent += 70000;
+                        order.setTotalIncShipping(totalCurrent);
                         totalOrderTextView.setText("VND " + String.valueOf(totalCurrent));
                         break;
                 }
@@ -101,10 +109,12 @@ public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSu
                     Log.d(TAG, "Current total: " + currentCart.getTotal());
                     TextView totalTextView = root.findViewById(R.id.totalConfirmationPrice);
                     TextView totalOrderTextView = root.findViewById(R.id.orderTotalTextView);
-                    totalCurrent[0] = currentCart.getTotal() + 20000;
+                    order.setTotal(currentCart.getTotal());
+                    order.setCartObjectList(currentCart.getCartObjectList());
+                    order.setTotalIncShipping(currentCart.getTotal() + 20000);
 
                     totalTextView.setText("VND " + String.valueOf(currentCart.getTotal()));
-                    totalOrderTextView.setText("VND " + String.valueOf(totalCurrent[0]));
+                    totalOrderTextView.setText("VND " + String.valueOf(currentCart.getTotal() + 20000));
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
@@ -142,4 +152,6 @@ public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSu
     public void submitPaymentDetail() {
         System.out.println("haha");
     }
+
+
 }

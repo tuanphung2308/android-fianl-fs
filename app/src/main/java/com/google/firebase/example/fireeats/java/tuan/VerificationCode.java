@@ -25,7 +25,7 @@ public class VerificationCode extends AppCompatActivity {
         button.setOnClickListener(v -> {
             System.out.println("Test");
 //            Intent intent = new Intent(this, BottomNavigationSmall.class);
-            Intent intent = new Intent(this, BottomNavigationSmall.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("fuck you", "fuck");
             startActivity(intent);
         });

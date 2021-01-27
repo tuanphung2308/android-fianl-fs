@@ -50,7 +50,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class BottomNavigationSmall extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private ImageView[] menu_nav;
     private View notif_badge;
 
@@ -66,7 +66,7 @@ public class BottomNavigationSmall extends AppCompatActivity {
     OrderFragment frag3 = new OrderFragment();
     UserFragment fragmentProfile = new UserFragment();
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "HomeActivity";
     private static final int RC_SIGN_IN = 9001;
     private MainActivityViewModel mViewModel;
 
@@ -253,51 +253,6 @@ public class BottomNavigationSmall extends AppCompatActivity {
                 onOptionsItemSelected(menu_notif);
             }
         });
-
-        MenuItem action_search = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(action_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                return false;
-            }
-        });
-
-        MenuItemCompat.setOnActionExpandListener(action_search, new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                menu_notif.setVisible(true);
-                initToolbar();
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                actionBar.setDisplayHomeAsUpEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
-                menu_notif.setVisible(false);
-                return true;
-            }
-        });
-
-//        searchView.setOnSearchClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-//            @Override
-//            public boolean onClose() {
-//
-//                return false;
-//            }
-//        });
 
         return true;
     }

@@ -88,4 +88,14 @@ public class FragmentShipping extends Fragment implements OnPaymentDetailSubmit 
     public void submitPaymentDetail() {
         uploadPaymentDetail();
     }
+
+    public PaymentDetail getPaymentDetail() {
+        PaymentDetail pd = new PaymentDetail();
+        pd.setName(nameEditText.getText().toString());
+        pd.setEmail(emailEditText.getText().toString());
+        pd.setPhoneNumber(phoneEditText.getText().toString());
+        pd.setAddress1(address1EditText.getText().toString());
+        pd.setAddress2(address2EditText.getText().toString());
+        return pd;
+    }
 }

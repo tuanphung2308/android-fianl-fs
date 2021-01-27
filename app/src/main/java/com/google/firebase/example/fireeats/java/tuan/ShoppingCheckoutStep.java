@@ -15,16 +15,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.fragment.DialogPaymentSuccessFragment;
 import com.google.firebase.example.fireeats.java.fragment.FragmentConfirmation;
 import com.google.firebase.example.fireeats.java.fragment.FragmentPayment;
 import com.google.firebase.example.fireeats.java.fragment.FragmentShipping;
+import com.google.firebase.example.fireeats.java.model.Order;
+import com.google.firebase.example.fireeats.java.model.PaymentDetail;
 import com.google.firebase.example.fireeats.java.utils.Tools;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ShoppingCheckoutStep extends AppCompatActivity {
-
+    private FirebaseFirestore mFirestore;
     private enum State {
         SHIPPING,
         PAYMENT,
@@ -46,6 +57,8 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Firestore
+        mFirestore = FirebaseFirestore.getInstance();
         setContentView(R.layout.activity_shopping_checkout_step);
         initToolbar();
         initComponent();
@@ -53,16 +66,32 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
         displayFragment(State.SHIPPING);
     }
 
-    private void showDialogPaymentSuccess() {
+    private void showDialogPaymentSuccess(Order order) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        DialogPaymentSuccessFragment newFragment = new DialogPaymentSuccessFragment();
+        DialogPaymentSuccessFragment newFragment = new DialogPaymentSuccessFragment(order);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
     }
 
     private void orderComplete() {
-        showDialogPaymentSuccess();
+        Order order = new Order();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Order orderData = fragmentConfirmation.getOrder();
+        order.setCartObjectList(orderData.getCartObjectList());
+        order.setTotal(orderData.getTotal());
+        order.setTotalIncShipping(orderData.getTotalIncShipping());
+        order.setFirebaseUID(user.getUid());
+        order.setPaymentDetail(fragmentShipping.getPaymentDetail());
+        mFirestore.collection("orders").document(new Date().getTime() + "-" + user.getUid()).set(order);
+
+        Map<String, Object> dataInit = new HashMap<>();
+        dataInit.put("total", 0);
+        dataInit.put("cartObjectList", new ArrayList<>());
+        mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .set(dataInit);
+        showDialogPaymentSuccess(order);
 //        finish();
     }
 
