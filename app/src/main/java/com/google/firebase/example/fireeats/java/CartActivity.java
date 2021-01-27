@@ -61,7 +61,6 @@ public class CartActivity extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
 
-    private FilterDialogFragment mFilterDialog;
     private DocumentReference cartRef;
     private MainActivityViewModel mViewModel;
     private CartObjectAdapter cartObjectAdapter;

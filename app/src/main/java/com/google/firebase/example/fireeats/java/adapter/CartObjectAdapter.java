@@ -1,5 +1,6 @@
 package com.google.firebase.example.fireeats.java.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,11 +8,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.CartObject;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 
 import org.w3c.dom.Text;
 
@@ -103,11 +115,45 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
         viewHolder.getQuantityUp().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                final DocumentReference sfDocRef = mFirestore.collection("carts").document(user.getUid());
                 try {
-                    int quantity = Integer.parseInt((String) viewHolder.getQuantityText().getText());
-                    viewHolder.getQuantityText().setText(String.valueOf(quantity + 1));
-                    cartObjectList.get(position).setQuantity(quantity + 1);
-                    viewHolder.getPriceText().setText("VND " + String.valueOf(cartObjectList.get(position).getQuantity() * cartObjectList.get(position).getProduct().getPrice()));
+                    int quantity = Integer.parseInt((String) viewHolder.getQuantityText().getText()) + 1;
+                    viewHolder.getPriceText().setText("VND " + String.valueOf(quantity * cartObjectList.get(position).getProduct().getPrice()));
+                    viewHolder.getQuantityText().setText(String.valueOf(quantity));
+                    CartObject cartObject = cartObjectList.get(position);
+                    mFirestore.runTransaction(new Transaction.Function<Cart>() {
+                        @Override
+                        public Cart apply(Transaction transaction) throws FirebaseFirestoreException {
+                            DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                            Cart currentCart = snapshot.toObject(Cart.class);
+                            List<CartObject> cartObjectsCurrent = currentCart.getCartObjectList();
+                            Boolean foundProduct = false;
+                            for (CartObject co : cartObjectsCurrent) {
+                                if (co.getProduct().getName().equals(cartObject.getProduct().getName())) {
+                                    foundProduct = true;
+                                    co.setQuantity(quantity);
+                                }
+                            }
+                            if (!foundProduct) {
+                                cartObjectsCurrent.add(cartObject);
+                            }
+                            transaction.update(sfDocRef, "cartObjectList", cartObjectsCurrent);
+                            return currentCart;
+                        }
+                    })
+                            .addOnSuccessListener(new OnSuccessListener<Cart>() {
+                                @Override
+                                public void onSuccess(Cart result) {
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                }
+                            });
+
                     return;
                 } catch (NumberFormatException e) {
                     return;
@@ -118,7 +164,12 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
             @Override
             public void onClick(View view) {
                 try {
+                    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    final DocumentReference sfDocRef = mFirestore.collection("carts").document(user.getUid());
                     int quantity = Integer.parseInt((String) viewHolder.getQuantityText().getText());
+                    CartObject cartObject = cartObjectList.get(position);
+
                     if (quantity >= 1) {
                         quantity = quantity - 1;
                         if (quantity == 0) {
@@ -130,6 +181,27 @@ public class CartObjectAdapter extends RecyclerView.Adapter<CartObjectAdapter.Vi
                             cartObjectList.get(position).setQuantity(quantity);
                             viewHolder.getPriceText().setText("VND " + String.valueOf(cartObjectList.get(position).getQuantity() * cartObjectList.get(position).getProduct().getPrice()));
                         }
+
+                        mFirestore.runTransaction(
+                                new Transaction.Function<Cart>() {
+                                    @Override
+                                    public Cart apply(Transaction transaction) throws FirebaseFirestoreException {
+                                        DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                                        Cart currentCart = snapshot.toObject(Cart.class);
+                                        transaction.update(sfDocRef, "cartObjectList", cartObjectList);
+                                        return currentCart;
+                                    }
+                                })
+                                .addOnSuccessListener(new OnSuccessListener<Cart>() {
+                                    @Override
+                                    public void onSuccess(Cart result) {
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                    }
+                                });
                     }
                     return;
                 } catch (NumberFormatException e) {

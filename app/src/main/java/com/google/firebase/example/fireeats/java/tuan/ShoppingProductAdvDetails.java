@@ -1,7 +1,6 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
+
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +71,6 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
 
         // Get reference to the restaurant
         mRestaurantRef = mFirestore.collection("products").document(restaurantId);
-
         initToolbar();
     }
 
@@ -120,7 +123,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         TextView productDescription = (TextView) findViewById(R.id.productDescription);
         productDescription.setText(product.getDescription());
 
-        AppCompatRatingBar ratingBar =  (AppCompatRatingBar) findViewById(R.id.ratingBar);
+        AppCompatRatingBar ratingBar = (AppCompatRatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating((float) product.getAvgRating());
 
         TextView ratingCount = findViewById(R.id.ratingCount);
@@ -187,27 +190,53 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 CartObject cartObject = new CartObject();
                 cartObject.setProduct(product);
-                List<CartObject> cartObjectList = new ArrayList<>();
                 int quantity = 1;
                 try {
                     quantity = Integer.parseInt((String) quantityText.getText());
                 } catch (NumberFormatException e) {
                 }
                 cartObject.setQuantity(quantity);
-                cartObjectList.add(cartObject);
-                Cart cart = new Cart();
-                cart.setCartObjectList(cartObjectList);
 
+                // init new cart
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Map<String, Object> data = new HashMap<>();
-                data.put("items", cartObjectList);
 
-                mFirestore.collection("carts").document(user.getUid())
-                        .set(cart);
-//                        .set(data, SetOptions.merge());
-                // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
+                //from here
+                final DocumentReference sfDocRef = mFirestore.collection("carts").document(user.getUid());
+                mFirestore.runTransaction(new Transaction.Function<Cart>() {
+                    @Override
+                    public Cart apply(Transaction transaction) throws FirebaseFirestoreException {
+                        DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                        Cart currentCart = snapshot.toObject(Cart.class);
+                        List<CartObject> cartObjectsCurrent = currentCart.getCartObjectList();
+                        Boolean foundProduct = false;
+                        for (CartObject co : cartObjectsCurrent) {
+                            if (co.getProduct().getName().equals(cartObject.getProduct().getName())) {
+                                foundProduct = true;
+                                co.setQuantity(co.getQuantity() + cartObject.getQuantity());
+                            }
+                        }
+                        if (!foundProduct) {
+                            cartObjectsCurrent.add(cartObject);
+                        }
+                        transaction.update(sfDocRef, "cartObjectList", cartObjectsCurrent);
+                        return currentCart;
+                    }
+                })
+                        .addOnSuccessListener(new OnSuccessListener<Cart>() {
+                            @Override
+                            public void onSuccess(Cart result) {
+                                Log.d(TAG, "Transaction success: " + result.getCartObjectList().size());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Transaction failure.", e);
+                            }
+                        });
             }
         });
 

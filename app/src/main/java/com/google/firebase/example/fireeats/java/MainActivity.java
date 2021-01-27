@@ -42,10 +42,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
@@ -130,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements
         if (shouldStartSignIn()) {
             startSignIn();
             return;
+        } else {
+            Map<String, Object> data = new HashMap<>();
+            data.put("cartObjectList", new ArrayList<>());
+
+            mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .set(data, SetOptions.merge());
+
         }
 
         // Apply filters
@@ -307,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements
                 .setPositiveButton(R.string.option_retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                      startSignIn();
+                        startSignIn();
                     }
                 })
                 .setNegativeButton(R.string.option_exit, new DialogInterface.OnClickListener() {
