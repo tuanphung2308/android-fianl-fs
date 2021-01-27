@@ -225,6 +225,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.menu_nav_3:
                         System.out.println("3rd tab");
                         viewPager.setCurrentItem(2);
+                        frag3.loadOrder();
                         break;
                     case R.id.menu_nav_5:
                         System.out.println("4th tab");
