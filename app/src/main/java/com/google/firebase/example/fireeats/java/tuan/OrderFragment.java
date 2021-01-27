@@ -63,32 +63,34 @@ public class OrderFragment extends Fragment implements OrderAdapter.OnOrderSelec
 
     public void loadOrder() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("orders")
-                .whereEqualTo("firebaseUID", user.getUid())
-                .limit(20);
+        if (user != null) {
+            // Get ${LIMIT} restaurants
+            mQuery = mFirestore.collection("orders")
+                    .whereEqualTo("firebaseUID", user.getUid())
+                    .limit(20);
 
-        // RecyclerView
-        mAdapter = new OrderAdapter(mQuery, this) {
-            @Override
-            protected void onDataChanged() {
-                // Show/hide content if the query returns empty.
-                if (getItemCount() == 0) {
-                    recyclerView.setVisibility(View.GONE);
-                    viewEmpty.setVisibility(View.VISIBLE);
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    viewEmpty.setVisibility(View.GONE);
+            // RecyclerView
+            mAdapter = new OrderAdapter(mQuery, this) {
+                @Override
+                protected void onDataChanged() {
+                    // Show/hide content if the query returns empty.
+                    if (getItemCount() == 0) {
+                        recyclerView.setVisibility(View.GONE);
+                        viewEmpty.setVisibility(View.VISIBLE);
+                    } else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        viewEmpty.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            protected void onError(FirebaseFirestoreException e) {
-                // Show a snackbar on errors
-            }
-        };
-        recyclerView.setAdapter(mAdapter);
-        mAdapter.startListening();
+                @Override
+                protected void onError(FirebaseFirestoreException e) {
+                    // Show a snackbar on errors
+                }
+            };
+            recyclerView.setAdapter(mAdapter);
+            mAdapter.startListening();
+        }
     }
 
     @Override
