@@ -37,6 +37,7 @@ public class OrderFragment extends Fragment implements OrderAdapter.OnOrderSelec
     private OrderAdapter mAdapter;
     private RelativeLayout viewEmpty;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_four, container, false);
@@ -57,35 +58,39 @@ public class OrderFragment extends Fragment implements OrderAdapter.OnOrderSelec
 
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
+        loadOrder();
+    }
 
+    public void loadOrder() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("orders")
-                .whereEqualTo("firebaseUID", user.getUid())
-                .limit(20);
+        if (user != null) {
+            // Get ${LIMIT} restaurants
+            mQuery = mFirestore.collection("orders")
+                    .whereEqualTo("firebaseUID", user.getUid())
+                    .limit(20);
 
-// RecyclerView
-        mAdapter = new OrderAdapter(mQuery, this) {
-            @Override
-            protected void onDataChanged() {
-                // Show/hide content if the query returns empty.
-                if (getItemCount() == 0) {
-                    recyclerView.setVisibility(View.GONE);
-                    viewEmpty.setVisibility(View.VISIBLE);
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    viewEmpty.setVisibility(View.GONE);
+            // RecyclerView
+            mAdapter = new OrderAdapter(mQuery, this) {
+                @Override
+                protected void onDataChanged() {
+                    // Show/hide content if the query returns empty.
+                    if (getItemCount() == 0) {
+                        recyclerView.setVisibility(View.GONE);
+                        viewEmpty.setVisibility(View.VISIBLE);
+                    } else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        viewEmpty.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            protected void onError(FirebaseFirestoreException e) {
-                // Show a snackbar on errors
-                Snackbar.make(v,
-                        "Error: check logs for info.", Snackbar.LENGTH_LONG).show();
-            }
-        };
-        recyclerView.setAdapter(mAdapter);
+                @Override
+                protected void onError(FirebaseFirestoreException e) {
+                    // Show a snackbar on errors
+                }
+            };
+            recyclerView.setAdapter(mAdapter);
+            mAdapter.startListening();
+        }
     }
 
     @Override
