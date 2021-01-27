@@ -2,7 +2,9 @@ package com.google.firebase.example.fireeats.java.data;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.firebase.example.fireeats.R;
@@ -18,6 +20,11 @@ import com.google.firebase.example.fireeats.java.model.ShopProduct;
 import com.google.firebase.example.fireeats.java.model.Social;
 import com.google.firebase.example.fireeats.java.utils.MaterialColor;
 import com.google.firebase.example.fireeats.java.utils.Tools;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +36,7 @@ import java.util.Random;
 
 @SuppressWarnings("ResourceType")
 public class DataGenerator {
-
+    private static final String TAG = "Data";
     private static Random r = new Random();
 
     public static int randInt(int max) {
@@ -113,6 +120,30 @@ public class DataGenerator {
             items.add(obj);
         }
         return items;
+//        List<CardViewImg> items = new ArrayList<>();
+//
+//        List<String> titles =  new ArrayList<>();
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final DocumentReference docRef = db.collection("orders").document("2fMSCeYLor3HYgTPNTaS");
+//        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot snapshot,
+//                                @Nullable FirebaseFirestoreException e) {
+//                if (e != null) {
+//                    Log.w(TAG, "Listen failed.", e);
+//
+//                    return;
+//                }
+//
+//                if (snapshot != null && snapshot.exists()) {
+//                    Log.d(TAG, "Current data: " + snapshot.getData());
+//
+//
+//                } else {
+//                    Log.d(TAG, "Current data: null");
+//                }
+//            }
+//        });
     }
 
     /**
@@ -122,6 +153,7 @@ public class DataGenerator {
      * @return list of object
      */
     public static List<People> getPeopleData(Context ctx) {
+        System.out.println("sfsdfsdf");
         List<People> items = new ArrayList<>();
         TypedArray drw_arr = ctx.getResources().obtainTypedArray(R.array.people_images);
         String name_arr[] = ctx.getResources().getStringArray(R.array.people_names);
