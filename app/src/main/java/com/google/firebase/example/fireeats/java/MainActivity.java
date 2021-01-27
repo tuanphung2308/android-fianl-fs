@@ -29,6 +29,7 @@ import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.databinding.ActivityMainBinding;
 import com.google.firebase.example.fireeats.java.adapter.RestaurantAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.PaymentDetail;
 import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.model.Rating;
 import com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails;
@@ -134,14 +135,6 @@ public class MainActivity extends AppCompatActivity implements
         if (shouldStartSignIn()) {
             startSignIn();
             return;
-        } else {
-            Map<String, Object> data = new HashMap<>();
-            data.put("total", 0);
-            data.put("cartObjectList", new ArrayList<>());
-
-            mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .set(data, SetOptions.merge());
-
         }
 
         // Apply filters
@@ -198,6 +191,16 @@ public class MainActivity extends AppCompatActivity implements
                 } else {
                     showSignInErrorDialog(R.string.message_unknown);
                 }
+            } else {
+                Map<String, Object> dataInit = new HashMap<>();
+                dataInit.put("total", 0);
+                dataInit.put("cartObjectList", new ArrayList<>());
+
+                mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .set(dataInit, SetOptions.merge());
+
+                mFirestore.collection("paymentDetails").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .set(new PaymentDetail(), SetOptions.merge());
             }
         }
     }

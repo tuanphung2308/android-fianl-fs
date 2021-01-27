@@ -20,6 +20,7 @@
             app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/nameEditText"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,9 +28,19 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="Name"
             android:minHeight="@dimen/spacing_xmlarge"
-            android:text="Laura Michelle" />
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="EMAIL"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/grey_40"
+            app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/emailEditText"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,9 +48,19 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="Email"
             android:minHeight="@dimen/spacing_xmlarge"
-            android:text="laura.michelle@mail.com" />
+            android:text="" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="PHONE NUMBER"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/grey_40"
+            app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/phoneEditText"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +68,7 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="Phone"
             android:minHeight="@dimen/spacing_xmlarge"
-            android:text="(859) 261-0876" />
+            android:text="" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,72 +80,26 @@
             app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/address1EditText"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Address"
+            android:hint="Address 1"
             android:minHeight="@dimen/spacing_xmlarge"
-            android:text="1144 Central" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:orientation="horizontal">
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="Country"
-                android:text="United State"
-                android:drawableEnd="@drawable/ic_expand_arrow"
-                android:drawableRight="@drawable/ic_expand_arrow"
-                android:minHeight="@dimen/spacing_xmlarge" />
-
-            <View
-                android:layout_width="@dimen/spacing_middle"
-                android:layout_height="0dp" />
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="ZIP Code"
-                android:text="41071"
-                android:minHeight="@dimen/spacing_xmlarge" />
-
-        </LinearLayout>
+            android:text="" />
 
         <EditText
+            android:id="@+id/address2EditText"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:drawableEnd="@drawable/ic_expand_arrow"
-            android:drawableRight="@drawable/ic_expand_arrow"
+            android:layout_marginTop="@dimen/spacing_large"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="City"
-            android:text="Newport"
-            android:minHeight="@dimen/spacing_xmlarge" />
-
-        <EditText
-            style="@style/EditText.Flat.Grey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:drawableEnd="@drawable/ic_expand_arrow"
-            android:drawableRight="@drawable/ic_expand_arrow"
-            android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="State / Province"
-            android:text="Kentucky"
-            android:minHeight="@dimen/spacing_xmlarge" />
+            android:hint="Address 2"
+            android:minHeight="@dimen/spacing_xmlarge"
+            android:text="" />
 
     </LinearLayout>
 

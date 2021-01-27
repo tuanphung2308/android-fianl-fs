@@ -29,6 +29,7 @@ public class BottomSheetMap extends AppCompatActivity {
     private GoogleMap mMap;
     private BottomSheetBehavior bottomSheetBehavior;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

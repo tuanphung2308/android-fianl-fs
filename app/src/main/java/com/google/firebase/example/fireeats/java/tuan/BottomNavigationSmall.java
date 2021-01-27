@@ -1,5 +1,6 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -10,21 +11,31 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.BottomBarAdapter;
 import com.google.firebase.example.fireeats.java.adapter.NoSwipePager;
 import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.PaymentDetail;
 import com.google.firebase.example.fireeats.java.utils.Tools;
+import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -33,6 +44,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,11 +59,16 @@ public class BottomNavigationSmall extends AppCompatActivity {
     private int notification_count = -1;
     private ActionBar actionBar;
     private Toolbar toolbar;
+    private FirebaseFirestore mFirestore;
 
     HomeFragment frag1 = new HomeFragment();
     CategoryFragment frag2 = new CategoryFragment();
     OrderFragment frag3 = new OrderFragment();
     UserFragment fragmentProfile = new UserFragment();
+
+    private static final String TAG = "MainActivity";
+    private static final int RC_SIGN_IN = 9001;
+    private MainActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +91,94 @@ public class BottomNavigationSmall extends AppCompatActivity {
 
         viewPager.setAdapter(pagerAdapter);
 
+        // View model
+        mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        fragmentProfile.setmViewModel(mViewModel);
+
+        // Firestore
+        mFirestore = FirebaseFirestore.getInstance();
+
         initToolbar();
         initComponent();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Start sign in if necessary
+        if (shouldStartSignIn()) {
+            startSignIn();
+            return;
+        } else {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DocumentReference cartRef = mFirestore.collection("carts").document(user.getUid());
+            cartRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Map<String, Object> dataInit = new HashMap<>();
+                            dataInit.put("total", 0);
+                            dataInit.put("cartObjectList", new ArrayList<>());
+                            mFirestore.collection("carts").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .set(dataInit);
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+
+            DocumentReference paymentDetailRef = mFirestore.collection("paymentDetails").document(user.getUid());
+            paymentDetailRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                        } else {
+                            Map<String, Object> dataInit = new HashMap<>();
+                            dataInit.put("total", 0);
+                            dataInit.put("cartObjectList", new ArrayList<>());
+                            mFirestore
+                                    .collection("paymentDetails")
+                                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .set(dataInit);
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+            mViewModel.setIsSigningIn(false);
+
+            if (resultCode != RESULT_OK) {
+                if (response == null) {
+                    // User pressed the back button.
+                    finish();
+                } else if (response.getError() != null
+                        && response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    showSignInErrorDialog(R.string.message_no_network);
+                } else {
+                    showSignInErrorDialog(R.string.message_unknown);
+                }
+            }
+        }
     }
 
     private void initToolbar() {
@@ -86,6 +190,7 @@ public class BottomNavigationSmall extends AppCompatActivity {
         Tools.setSystemBarColor(this, R.color.grey_5);
         Tools.setSystemBarLight(this);
     }
+
     private void initComponent() {
         menu_nav = new ImageView[4];
         menu_nav[0] = findViewById(R.id.menu_nav_1);
@@ -198,6 +303,7 @@ public class BottomNavigationSmall extends AppCompatActivity {
 
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int item_id = item.getItemId();
@@ -219,5 +325,40 @@ public class BottomNavigationSmall extends AppCompatActivity {
         }
     }
 
+    private boolean shouldStartSignIn() {
+        return (!mViewModel.getIsSigningIn() && FirebaseAuth.getInstance().getCurrentUser() == null);
+    }
 
+    private void startSignIn() {
+        // Sign in with FirebaseUI
+        Intent intent = AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(Collections.singletonList(
+                        new AuthUI.IdpConfig.EmailBuilder().build()))
+                .setIsSmartLockEnabled(false)
+                .build();
+
+        startActivityForResult(intent, RC_SIGN_IN);
+        mViewModel.setIsSigningIn(true);
+    }
+
+    private void showSignInErrorDialog(@StringRes int message) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.title_sign_in_error)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.option_retry, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startSignIn();
+                    }
+                })
+                .setNegativeButton(R.string.option_exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).create();
+
+        dialog.show();
+    }
 }
