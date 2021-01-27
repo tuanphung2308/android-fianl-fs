@@ -25,8 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.CartObjectAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
-import com.google.firebase.example.fireeats.java.model.CartObject;
-import com.google.firebase.example.fireeats.java.tuan.adapters.OnTotalUpdate;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

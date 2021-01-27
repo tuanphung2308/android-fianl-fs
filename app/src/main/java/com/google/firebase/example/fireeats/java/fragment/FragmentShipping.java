@@ -16,13 +16,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.PaymentDetail;
+import com.google.firebase.example.fireeats.java.tuan.adapters.OnPaymentDetailSubmit;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 //import com.google.firebase.example.fireeats.R;
 
-public class FragmentShipping extends Fragment {
+public class FragmentShipping extends Fragment implements OnPaymentDetailSubmit {
     private FirebaseFirestore mFirestore;
     private static final String TAG = "FragmentShipping";
     private EditText nameEditText, emailEditText, phoneEditText, address1EditText, address2EditText;
@@ -67,5 +69,23 @@ public class FragmentShipping extends Fragment {
             }
         });
         return root;
+    }
+
+    public void uploadPaymentDetail() {
+        PaymentDetail pd = new PaymentDetail();
+        pd.setName(nameEditText.getText().toString());
+        pd.setEmail(emailEditText.getText().toString());
+        pd.setPhoneNumber(phoneEditText.getText().toString());
+        pd.setAddress1(address1EditText.getText().toString());
+        pd.setAddress2(address2EditText.getText().toString());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        mFirestore.collection("paymentDetails").document(user.getUid())
+                .set(pd, SetOptions.merge());
+
+    }
+
+    @Override
+    public void submitPaymentDetail() {
+        uploadPaymentDetail();
     }
 }

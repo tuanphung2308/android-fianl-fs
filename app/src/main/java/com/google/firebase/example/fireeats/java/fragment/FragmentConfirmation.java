@@ -23,6 +23,7 @@ import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.CartObjectAdapter;
 import com.google.firebase.example.fireeats.java.adapter.ConfirmationCartObjectAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.tuan.adapters.OnPaymentDetailSubmit;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -30,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
-public class FragmentConfirmation extends Fragment {
+public class FragmentConfirmation extends Fragment  implements OnPaymentDetailSubmit {
 
     private DocumentReference cartRef;
     private ConfirmationCartObjectAdapter cartObjectAdapter;
@@ -135,5 +136,10 @@ public class FragmentConfirmation extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void submitPaymentDetail() {
+        System.out.println("haha");
     }
 }

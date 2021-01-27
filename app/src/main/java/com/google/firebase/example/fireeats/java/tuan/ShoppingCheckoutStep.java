@@ -33,6 +33,10 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
 
     State[] array_state = new State[]{State.SHIPPING, State.PAYMENT, State.CONFIRMATION};
 
+    FragmentShipping fragmentShipping = new FragmentShipping();
+    FragmentPayment fragmentPayment = new FragmentPayment();
+    FragmentConfirmation fragmentConfirmation = new FragmentConfirmation();
+
     private View line_first, line_second;
     private ImageView image_shipping, image_payment, image_confirm;
     private TextView tv_shipping, tv_payment, tv_confirm;
@@ -89,8 +93,10 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
                     t.setText("FINISH");
                 } else {
                     t.setText("NEXT");
+                    fragmentShipping.uploadPaymentDetail();
                 }
                 displayFragment(array_state[idx_state]);
+
             }
         });
 
@@ -124,17 +130,17 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
         refreshStepTitle();
 
         if (state.name().equalsIgnoreCase(State.SHIPPING.name())) {
-            fragment = new FragmentShipping();
+            fragment = fragmentShipping;
             tv_shipping.setTextColor(getResources().getColor(R.color.grey_90));
             image_shipping.clearColorFilter();
         } else if (state.name().equalsIgnoreCase(State.PAYMENT.name())) {
-            fragment = new FragmentPayment();
+            fragment = fragmentPayment;
             line_first.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             image_shipping.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
             image_payment.clearColorFilter();
             tv_payment.setTextColor(getResources().getColor(R.color.grey_90));
         } else if (state.name().equalsIgnoreCase(State.CONFIRMATION.name())) {
-            fragment = new FragmentConfirmation();
+            fragment = fragmentConfirmation;
             line_second.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             image_payment.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
             image_confirm.clearColorFilter();

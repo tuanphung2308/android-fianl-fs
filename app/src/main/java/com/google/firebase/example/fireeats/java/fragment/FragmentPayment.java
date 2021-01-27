@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.tuan.adapters.OnPaymentDetailSubmit;
 
-public class FragmentPayment extends Fragment {
+public class FragmentPayment extends Fragment  implements OnPaymentDetailSubmit {
 
     public FragmentPayment() {
     }
@@ -19,5 +20,10 @@ public class FragmentPayment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_payment, container, false);
 
         return root;
+    }
+
+    @Override
+    public void submitPaymentDetail() {
+        System.out.println("hahahaah");
     }
 }
