@@ -1,6 +1,7 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -267,7 +268,9 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ShoppingCartSimple.class);
+            intent.putExtra("fuck you", "fuck");
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
