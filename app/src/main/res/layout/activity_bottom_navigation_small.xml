@@ -88,7 +88,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:onClick="onNavigationClick"
                     android:padding="@dimen/spacing_mlarge"
-                    android:tint="@color/light_green_500"
+                    android:tint="@color/grey_20"
                     app:srcCompat="@drawable/ic_stack_menu"/>
 
             <View

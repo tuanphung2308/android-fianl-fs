@@ -319,7 +319,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bt_add_to_cart"
+                    android:id="@+id/openMapButton"
                     android:layout_width="0dp"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_weight="1"

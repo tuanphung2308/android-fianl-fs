@@ -126,9 +126,11 @@ public class ShoppingCartSimple extends AppCompatActivity {
     }
 
     public void onCheckOut(View view) {
-        finish();
-        Intent intent = new Intent(this, ShoppingCheckoutStep.class);
-        intent.putExtra("fuck you", "fuck");
-        startActivity(intent);
+        if (cartObjectAdapter.getItemCount() > 0) {
+            finish();
+            Intent intent = new Intent(this, ShoppingCheckoutStep.class);
+            intent.putExtra("fuck you", "fuck");
+            startActivity(intent);
+        }
     }
 }

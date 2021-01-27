@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.databinding.ActivityMainBinding;
+import com.google.firebase.example.fireeats.java.adapter.OrderAdapter;
 import com.google.firebase.example.fireeats.java.adapter.RestaurantAdapter;
 import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.PaymentDetail;
@@ -52,9 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements
-        FilterDialogFragment.FilterListener,
-        RestaurantAdapter.OnRestaurantSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements OrderAdapter.OnOrderSelectedListener{
 
     private static final String TAG = "MainActivity";
 
@@ -67,8 +66,7 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseFirestore mFirestore;
     private Query mQuery;
 
-    private FilterDialogFragment mFilterDialog;
-    private RestaurantAdapter mAdapter;
+    private OrderAdapter mAdapter;
 
     private MainActivityViewModel mViewModel;
 
@@ -80,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements
 
         setSupportActionBar(mBinding.toolbar);
 
-        mBinding.filterBar.setOnClickListener(this);
-        mBinding.buttonClearFilter.setOnClickListener(this);
-
         // View model
         mViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -92,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Get ${LIMIT} restaurants
-        mQuery = mFirestore.collection("products")
-                .orderBy("avgRating", Query.Direction.DESCENDING)
+        mQuery = mFirestore.collection("orders")
                 .limit(LIMIT);
 
         // RecyclerView
-        mAdapter = new RestaurantAdapter(mQuery, this) {
+        mAdapter = new OrderAdapter(mQuery, this) {
             @Override
             protected void onDataChanged() {
                 // Show/hide content if the query returns empty.
@@ -118,13 +113,10 @@ public class MainActivity extends AppCompatActivity implements
                         "Error: check logs for info.", Snackbar.LENGTH_LONG).show();
             }
         };
-        mBinding.recyclerRestaurants.setLayoutManager(new GridLayoutManager(this, 2));
-        mBinding.recyclerRestaurants.addItemDecoration(new SpacingItemDecoration(2, Tools.dpToPx(this, 8), true));
-        mBinding.recyclerRestaurants.setHasFixedSize(true);
+        mBinding.recyclerRestaurants.setLayoutManager(new LinearLayoutManager(this));
+//        mBinding.recyclerRestaurants.addItemDecoration(new SpacingItemDecoration(2, Tools.dpToPx(this, 8), true));
+//        mBinding.recyclerRestaurants.setHasFixedSize(true);
         mBinding.recyclerRestaurants.setAdapter(mAdapter);
-
-        // Filter Dialog
-        mFilterDialog = new FilterDialogFragment();
     }
 
     @Override
@@ -136,9 +128,6 @@ public class MainActivity extends AppCompatActivity implements
             startSignIn();
             return;
         }
-
-        // Apply filters
-        onFilter(mViewModel.getFilters());
 
         // Start listening for Firestore updates
         if (mAdapter != null) {
@@ -156,21 +145,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_add_items:
-                onAddItemsClicked();
-                break;
-            case R.id.menu_sign_out:
-                AuthUI.getInstance().signOut(this);
-                startSignIn();
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -205,67 +185,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    public void onFilterClicked() {
-        // Show the dialog containing filter options
-        mFilterDialog.show(getSupportFragmentManager(), FilterDialogFragment.TAG);
-    }
-
-    public void onClearFilterClicked() {
-        mFilterDialog.resetFilters();
-
-        onFilter(Filters.getDefault());
-    }
-
-    @Override
-    public void onRestaurantSelected(DocumentSnapshot restaurant) {
-        // Go to the details page for the selected restaurant
-        Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
-//        Intent intent = new Intent(this, RestaurantDetailActivity.class);
-        intent.putExtra(ShoppingProductAdvDetails.KEY_RESTAURANT_ID, restaurant.getId());
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
-    }
-
-    @Override
-    public void onFilter(Filters filters) {
-        // Construct query basic query
-        Query query = mFirestore.collection("products");
-
-        // Category (equality filter)
-        if (filters.hasCategory()) {
-            query = query.whereEqualTo(Product.FIELD_CATEGORY, filters.getCategory());
-        }
-
-        // City (equality filter)
-        if (filters.hasCity()) {
-            query = query.whereEqualTo(Product.FIELD_CITY, filters.getCity());
-        }
-
-        // Price (equality filter)
-        if (filters.hasPrice()) {
-            query = query.whereEqualTo(Product.FIELD_PRICE, filters.getPrice());
-        }
-
-        // Sort by (orderBy with direction)
-        if (filters.hasSortBy()) {
-            query = query.orderBy(filters.getSortBy(), filters.getSortDirection());
-        }
-
-        // Limit items
-        query = query.limit(LIMIT);
-
-        // Update the query
-        mAdapter.setQuery(query);
-
-        // Set header
-        mBinding.textCurrentSearch.setText(HtmlCompat.fromHtml(filters.getSearchDescription(this),
-                HtmlCompat.FROM_HTML_MODE_LEGACY));
-        mBinding.textCurrentSortBy.setText(filters.getOrderDescription(this));
-
-        // Save filters
-        mViewModel.setFilters(filters);
-    }
-
     private boolean shouldStartSignIn() {
         return (!mViewModel.getIsSigningIn() && FirebaseAuth.getInstance().getCurrentUser() == null);
     }
@@ -280,38 +199,6 @@ public class MainActivity extends AppCompatActivity implements
 
         startActivityForResult(intent, RC_SIGN_IN);
         mViewModel.setIsSigningIn(true);
-    }
-
-    private void onAddItemsClicked() {
-        // Add a bunch of random restaurants
-        WriteBatch batch = mFirestore.batch();
-        for (int i = 0; i < 10; i++) {
-            DocumentReference restRef = mFirestore.collection("products").document();
-
-            // Create random restaurant / ratings
-            Product randomProduct = RestaurantUtil.getRandom(this);
-            List<Rating> randomRatings = RatingUtil.getRandomList(randomProduct.getNumRatings());
-            randomProduct.setAvgRating(RatingUtil.getAverageRating(randomRatings));
-
-            // Add restaurant
-            batch.set(restRef, randomProduct);
-
-            // Add ratings to subcollection
-            for (Rating rating : randomRatings) {
-                batch.set(restRef.collection("ratings").document(), rating);
-            }
-        }
-
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "Write batch succeeded.");
-                } else {
-                    Log.w(TAG, "write batch failed.", task.getException());
-                }
-            }
-        });
     }
 
     private void showSignInErrorDialog(@StringRes int message) {
@@ -336,14 +223,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.filterBar:
-                onFilterClicked();
-                break;
-            case R.id.buttonClearFilter:
-                onClearFilterClicked();
-                break;
-        }
+    public void onOrderSelected(DocumentSnapshot restaurant) {
+//        Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
+////        Intent intent = new Intent(this, RestaurantDetailActivity.class);
+//        intent.putExtra(ShoppingProductAdvDetails.KEY_RESTAURANT_ID, restaurant.getId());
+//        startActivity(intent);
+//        overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 }

@@ -3,27 +3,114 @@ package com.google.firebase.example.fireeats.java.tuan;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.adapter.OrderCartObjectAdapter;
+import com.google.firebase.example.fireeats.java.model.Order;
 import com.google.firebase.example.fireeats.java.utils.Tools;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
 public class ShoppingCheckoutTimeline extends AppCompatActivity {
+
+    private FirebaseFirestore mFirestore;
+    private static final String TAG = "ShoppingCheckoutTL";
+    private Order order;
+    private String orderId;
+    private OrderCartObjectAdapter cartObjectAdapter;
+    private RecyclerView recyclerView;
+    private Button cancelOrderButton;
+
+    private EditText shippingName, shippingEmail, shippingPhone, shippingAddress1, shippingAddress2, paymentType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_checkout_timeline);
         initToolbar();
 
-        ((AppCompatButton) findViewById(R.id.bt_add_to_cart)).setOnClickListener(new View.OnClickListener() {
+        recyclerView = findViewById(R.id.recyclerCartObjects);
+        shippingName = findViewById(R.id.shippingName);
+        shippingEmail = findViewById(R.id.shippingEmail);
+        shippingPhone = findViewById(R.id.shippingPhone);
+        shippingAddress1 = findViewById(R.id.shippingAddress1);
+        shippingAddress2 = findViewById(R.id.shippingAddress2);
+        paymentType = findViewById(R.id.paymentType);
+        cancelOrderButton = findViewById(R.id.cancelOrderButton);
+
+        shippingName.setEnabled(false);
+        shippingEmail.setEnabled(false);
+        shippingPhone.setEnabled(false);
+        shippingAddress1.setEnabled(false);
+        shippingAddress2.setEnabled(false);
+        paymentType.setEnabled(false);
+
+        Intent intent = getIntent();
+        orderId = intent.getStringExtra("ORDERID");
+
+        // Firestore
+        mFirestore = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = mFirestore.collection("orders").document(orderId);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    order = snapshot.toObject(Order.class);
+                    cartObjectAdapter = new OrderCartObjectAdapter(order.getCartObjectList());
+                    recyclerView.setAdapter(cartObjectAdapter);
+                    cartObjectAdapter.notifyDataSetChanged();
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(mLayoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+                    shippingName.setText(order.getPaymentDetail().getName());
+                    shippingEmail.setText(order.getPaymentDetail().getEmail());
+                    shippingPhone.setText(order.getPaymentDetail().getPhoneNumber());
+                    shippingAddress1.setText(order.getPaymentDetail().getAddress1());
+                    shippingAddress2.setText(order.getPaymentDetail().getAddress2());
+                    paymentType.setText(order.getPaymentType());
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
+        ((AppCompatButton) findViewById(R.id.cancelOrderButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                order.setOrderStatus("CANCELLED");
+                mFirestore.collection("orders").document(orderId).set(order);
+            }
+        });
+
+        ((AppCompatButton) findViewById(R.id.openMapButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openMapProgressView();
@@ -50,7 +137,7 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
+//        getMenuInflater().inflate(R.menu.menu_setting, menu);
         Tools.changeMenuIconColor(menu, getResources().getColor(R.color.grey_60));
         return true;
     }

@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -179,7 +178,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
             }
         });
 
-        Button addToCartButton = findViewById(R.id.bt_add_to_cart);
+        Button addToCartButton = findViewById(R.id.openMapButton);
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

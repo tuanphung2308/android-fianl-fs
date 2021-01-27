@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Popular"
+                    android:text="Promotions"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
                     <ImageView
                         android:id="@+id/image_3"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="120dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/feat1" />
 
@@ -152,7 +152,7 @@
                     <ImageView
                         android:id="@+id/image_4"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="120dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/feat2" />
 
@@ -178,7 +178,7 @@
                     <ImageView
                         android:id="@+id/image_5"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="120dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/feat3" />
 

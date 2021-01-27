@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -129,6 +130,8 @@ public class FragmentConfirmation extends Fragment implements OnPaymentDetailSub
                         Log.d(TAG, "Current data: " + document.getData());
                         Cart cart = document.toObject(Cart.class);
                         Log.d(TAG, "Current data: " + cart.getCartObjectList().size());
+
+
 
                         cartObjectAdapter = new ConfirmationCartObjectAdapter(cart.getCartObjectList());
                         recyclerView.setAdapter(cartObjectAdapter);

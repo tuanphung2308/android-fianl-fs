@@ -20,7 +20,6 @@
         <activity android:name=".java.tuan.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,11 +29,13 @@
         <activity
             android:name=".java.tuan.ShoppingProductAdvDetails"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".java.tuan.ShoppingCheckoutStep"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".java.tuan.ShoppingCheckoutTimeline"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
-
 </manifest>
