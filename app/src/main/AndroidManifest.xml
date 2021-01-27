@@ -9,7 +9,6 @@
         android:theme="@style/AppTheme"
         android:name="androidx.multidex.MultiDexApplication">
 
-
         <activity
             android:name=".java.MainActivity"
             android:theme="@style/AppTheme.Activity">

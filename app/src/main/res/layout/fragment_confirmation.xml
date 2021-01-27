@@ -30,14 +30,6 @@
                     android:textColor="@color/grey_40"
                     app:fontFamily="sans-serif-medium" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/colorPrimary"
-                    app:fontFamily="sans-serif-medium" />
-
             </LinearLayout>
 
             <TextView
@@ -84,14 +76,6 @@
                     android:textColor="@color/grey_40"
                     app:fontFamily="sans-serif-medium" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/colorPrimary"
-                    app:fontFamily="sans-serif-medium" />
-
             </LinearLayout>
 
             <TextView
@@ -130,144 +114,17 @@
                     android:textColor="@color/grey_40"
                     app:fontFamily="sans-serif-medium" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/colorPrimary"
-                    app:fontFamily="sans-serif-medium" />
-
             </LinearLayout>
 
-            <LinearLayout
+            <!-- Main Restaurants recycler -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerConfirmationCartObjects"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:clickable="true"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/image_shop_2" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_middle"
-                        android:layout_height="0dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Coup Hoodie Jacket"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/grey_90"
-                                app:fontFamily="sans-serif-medium" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="Size : M   Qty : 1"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/grey_40" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$89.00"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_90" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:background="@color/grey_5" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_large"
-                    android:clickable="true"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/image_shop_4" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_middle"
-                        android:layout_height="0dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Qonnoq Checked Blouse"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                                android:textColor="@color/grey_90"
-                                app:fontFamily="sans-serif-medium" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="Size : L   Qty : 1"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                                android:textColor="@color/grey_40" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$34.50"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@color/grey_90" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
         </LinearLayout>
 
@@ -290,112 +147,29 @@
                 android:textColor="@color/grey_40"
                 app:fontFamily="sans-serif-medium" />
 
-            <LinearLayout
+            <RadioGroup
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:id="@+id/radioGroup"
+                android:checkedButton="@+id/standard_delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                >
+                <RadioButton
+                    android:id="@+id/standard_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/colorPrimary"
 
-                <ImageView
-                    android:layout_width="@dimen/spacing_middle"
-                    android:layout_height="@dimen/spacing_middle"
-                    android:tint="@color/grey_20"
-                    app:srcCompat="@drawable/shape_round_primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:layout_weight="1"
-                    android:text="Regular (12 Days)"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_40"
-                    app:fontFamily="sans-serif-medium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:text="+$11"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_40"
-                    app:fontFamily="sans-serif-black" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_middle"
-                    android:layout_height="@dimen/spacing_middle"
-                    app:srcCompat="@drawable/shape_round_primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:layout_weight="1"
-                    android:text="Express (7 Days)"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_90"
-                    app:fontFamily="sans-serif-medium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:text="+$20"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_90"
-                    app:fontFamily="sans-serif-black" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_middle"
-                    android:layout_height="@dimen/spacing_middle"
-                    android:tint="@color/grey_20"
-                    app:srcCompat="@drawable/shape_round_primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:layout_weight="1"
-                    android:text="Priority (4 Days)"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_40"
-                    app:fontFamily="sans-serif-medium" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_middle"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:text="+$32"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_40"
-                    app:fontFamily="sans-serif-black" />
-
-            </LinearLayout>
+                    android:textSize="14dp"
+                    android:text="Standard Delivery                                       (+ VND 20,000)"/>
+                <RadioButton
+                    android:id="@+id/express_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:text="Express Delivery                                         (+ VND 70,000)"/>
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -420,6 +194,7 @@
                 app:fontFamily="sans-serif-medium" />
 
             <TextView
+                android:id="@+id/totalConfirmationPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$123.50"
@@ -441,6 +216,7 @@
             android:padding="@dimen/spacing_large">
 
             <TextView
+                android:id="@+id/productTotalTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -450,6 +226,7 @@
                 app:fontFamily="sans-serif-medium" />
 
             <TextView
+                android:id="@+id/orderTotalTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$143.50"

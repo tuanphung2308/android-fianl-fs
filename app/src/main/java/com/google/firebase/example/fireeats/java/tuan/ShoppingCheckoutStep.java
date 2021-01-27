@@ -98,6 +98,8 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (idx_state < 1) return;
+                TextView t = findViewById(R.id.text_step_next);
+                t.setText("NEXT");
                 idx_state--;
                 displayFragment(array_state[idx_state]);
             }
@@ -152,7 +154,7 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
+//        getMenuInflater().inflate(R.menu.menu_setting, menu);
         Tools.changeMenuIconColor(menu, getResources().getColor(R.color.grey_60));
         return true;
     }

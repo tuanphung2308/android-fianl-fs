@@ -11,14 +11,10 @@ import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.CardViewImg;
 import com.google.firebase.example.fireeats.java.model.Image;
 import com.google.firebase.example.fireeats.java.model.Inbox;
-import com.google.firebase.example.fireeats.java.model.MusicAlbum;
-import com.google.firebase.example.fireeats.java.model.MusicSong;
-import com.google.firebase.example.fireeats.java.model.News;
 import com.google.firebase.example.fireeats.java.model.People;
 import com.google.firebase.example.fireeats.java.model.ShopCategory;
 import com.google.firebase.example.fireeats.java.model.ShopProduct;
 import com.google.firebase.example.fireeats.java.model.Social;
-import com.google.firebase.example.fireeats.java.utils.MaterialColor;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,12 +22,9 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @SuppressWarnings("ResourceType")
@@ -286,101 +279,6 @@ public class DataGenerator {
             items.add(obj);
         }
         return items;
-    }
-
-
-    /**
-     * Generate dummy data music song
-     *
-     * @param ctx android context
-     * @return list of object
-     */
-    public static List<MusicSong> getMusicSong(Context ctx) {
-        List<MusicSong> items = new ArrayList<>();
-        TypedArray drw_arr = ctx.getResources().obtainTypedArray(R.array.album_cover);
-        String song_name[] = ctx.getResources().getStringArray(R.array.song_name);
-        String album_name[] = ctx.getResources().getStringArray(R.array.album_name);
-        for (int i = 0; i < drw_arr.length(); i++) {
-            MusicSong obj = new MusicSong();
-            obj.image = drw_arr.getResourceId(i, -1);
-            obj.title = song_name[i];
-            obj.brief = album_name[i];
-            obj.imageDrw = ctx.getResources().getDrawable(obj.image);
-            items.add(obj);
-        }
-        Collections.shuffle(items);
-        return items;
-    }
-
-    /**
-     * Generate dummy data music album
-     *
-     * @param ctx android context
-     * @return list of object
-     */
-    public static List<MusicAlbum> getMusicAlbum(Context ctx) {
-        List<MusicAlbum> items = new ArrayList<>();
-        TypedArray drw_arr = ctx.getResources().obtainTypedArray(R.array.album_cover);
-        String album_name[] = ctx.getResources().getStringArray(R.array.album_name);
-        for (int i = 0; i < drw_arr.length(); i++) {
-            MusicAlbum obj = new MusicAlbum();
-            obj.image = drw_arr.getResourceId(i, -1);
-            obj.name = album_name[i];
-            obj.brief = getRandomIndex(15) + " MusicSong (s)";
-            obj.color = MaterialColor.getColor(ctx, obj.name, i);
-            obj.imageDrw = ctx.getResources().getDrawable(obj.image);
-            items.add(obj);
-        }
-        return items;
-    }
-
-    /**
-     * Generate dummy data News
-     *
-     * @param ctx   android context
-     * @param count total result data
-     * @return list of object
-     */
-    public static List<News> getNewsData(Context ctx, int count) {
-
-        List<News> items = new ArrayList<>();
-
-        List<Integer> images = getAllImages(ctx);
-        List<String> titles = getStringsMedium(ctx);
-        List<String> full_date = getFullDate(ctx);
-        String cat[] = ctx.getResources().getStringArray(R.array.news_category);
-
-        for (int i = 0; i < count; i++) {
-            News obj = new News();
-            obj.image = images.get(getRandomIndex(images.size()));
-            obj.title = titles.get(getRandomIndex(titles.size()));
-            obj.subtitle = cat[getRandomIndex(cat.length)];
-            obj.date = full_date.get(getRandomIndex(full_date.size()));
-            items.add(obj);
-        }
-        return items;
-    }
-
-    public static String formatTime(long time) {
-        // income time
-        Calendar date = Calendar.getInstance();
-        date.setTimeInMillis(time);
-
-        // current time
-        Calendar curDate = Calendar.getInstance();
-        curDate.setTimeInMillis(System.currentTimeMillis());
-
-        SimpleDateFormat dateFormat = null;
-        if (date.get(Calendar.YEAR) == curDate.get(Calendar.YEAR)) {
-            if (date.get(Calendar.DAY_OF_YEAR) == curDate.get(Calendar.DAY_OF_YEAR)) {
-                dateFormat = new SimpleDateFormat("h:mm a", Locale.US);
-            } else {
-                dateFormat = new SimpleDateFormat("MMM d", Locale.US);
-            }
-        } else {
-            dateFormat = new SimpleDateFormat("MMM yyyy", Locale.US);
-        }
-        return dateFormat.format(time);
     }
 
     private static int getRandomIndex(int max) {

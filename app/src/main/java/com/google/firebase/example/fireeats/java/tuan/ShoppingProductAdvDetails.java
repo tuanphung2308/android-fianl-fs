@@ -32,17 +32,11 @@ import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Transaction;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShoppingProductAdvDetails extends AppCompatActivity
         implements EventListener<DocumentSnapshot> {
@@ -182,8 +176,6 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
                 } catch (NumberFormatException e) {
                     return;
                 }
-
-                // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
             }
         });
 

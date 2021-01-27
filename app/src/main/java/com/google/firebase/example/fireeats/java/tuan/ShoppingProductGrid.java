@@ -30,8 +30,6 @@ public class ShoppingProductGrid extends AppCompatActivity
         implements RestaurantAdapter.OnRestaurantSelectedListener {
 
     private static final String KEY_CATEGORY_ID = "CATEGORY";
-    private View parent_view;
-
     private RecyclerView recyclerView;
 
     private FirebaseFirestore mFirestore;
@@ -42,7 +40,6 @@ public class ShoppingProductGrid extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_product_grid);
-        parent_view = findViewById(R.id.parent_view);
 
         RecyclerView recyclerRestaurants = findViewById(R.id.recyclerRestaurants);
         LinearLayout viewEmpty = findViewById(R.id.viewEmpty);
@@ -141,6 +138,4 @@ public class ShoppingProductGrid extends AppCompatActivity
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
-
-
 }
