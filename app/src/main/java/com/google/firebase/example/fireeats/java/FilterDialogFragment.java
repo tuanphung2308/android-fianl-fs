@@ -22,7 +22,7 @@ public class FilterDialogFragment extends DialogFragment implements View.OnClick
 
     public static final String TAG = "FilterDialog";
 
-    interface FilterListener {
+    public interface FilterListener {
 
         void onFilter(Filters filters);
 

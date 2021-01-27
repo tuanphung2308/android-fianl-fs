@@ -19,15 +19,23 @@
             android:name=".java.tuan.ShoppingProductGrid"
             android:theme="@style/AppTheme.Activity" />
         <activity android:name=".java.tuan.BottomNavigationSmall">
+
+        </activity>
+        <activity
+            android:name=".java.tuan.ShoppingCartSimple"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".java.tuan.ShoppingProductAdvDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".java.CartActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".java.tuan.ShoppingProductAdvDetails"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

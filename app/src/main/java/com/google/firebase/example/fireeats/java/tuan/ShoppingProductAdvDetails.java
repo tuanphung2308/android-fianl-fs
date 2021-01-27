@@ -1,33 +1,43 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
-
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.model.CartObject;
 import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ShoppingProductAdvDetails extends AppCompatActivity
         implements EventListener<DocumentSnapshot> {
@@ -35,25 +45,16 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
     private static final String TAG = "RestaurantDetail";
 
     public static final String KEY_RESTAURANT_ID = "key_restaurant_id";
-
-    private View parent_view;
-    private TextView tv_qty;
+    private TextView quantityText;
+    Product product = new Product();
     private FirebaseFirestore mFirestore;
     private DocumentReference mRestaurantRef;
     private ListenerRegistration mRestaurantRegistration;
-
-    private static int[] array_color_fab = {
-            R.id.fab_color_blue,
-            R.id.fab_color_pink,
-            R.id.fab_color_grey,
-            R.id.fab_color_green
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_product_adv_details);
-        parent_view = findViewById(R.id.parent_view);
 
         // Get restaurant ID from extras
         String restaurantId = getIntent().getExtras().getString(KEY_RESTAURANT_ID);
@@ -68,7 +69,6 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         mRestaurantRef = mFirestore.collection("products").document(restaurantId);
 
         initToolbar();
-        initComponent();
     }
 
     @Override
@@ -109,6 +109,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
 
 
     private void onRestaurantLoaded(Product product) {
+        this.product = product;
         TextView product_name_textview = (TextView) findViewById(R.id.product_name_textview);
         product_name_textview.setText(product.getName());
 
@@ -147,6 +148,69 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         Glide.with(image4.getContext())
                 .load(product.getPhoto())
                 .into(image4);
+
+        FloatingActionButton subBtn = findViewById(R.id.fab_qty_sub);
+        FloatingActionButton addBtn = findViewById(R.id.fab_qty_add);
+        quantityText = findViewById(R.id.tv_qty);
+        subBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    int quantity = Integer.parseInt((String) quantityText.getText());
+                    if (quantity > 1)
+                        quantityText.setText(String.valueOf(quantity - 1));
+                    return;
+                } catch (NumberFormatException e) {
+                    return;
+                }
+
+                // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    int quantity = Integer.parseInt((String) quantityText.getText());
+                    quantityText.setText(String.valueOf(quantity + 1));
+                    return;
+                } catch (NumberFormatException e) {
+                    return;
+                }
+
+                // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
+            }
+        });
+
+        Button addToCartButton = findViewById(R.id.bt_add_to_cart);
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CartObject cartObject = new CartObject();
+                cartObject.setProduct(product);
+                List<CartObject> cartObjectList = new ArrayList<>();
+                int quantity = 1;
+                try {
+                    quantity = Integer.parseInt((String) quantityText.getText());
+                } catch (NumberFormatException e) {
+                }
+                cartObject.setQuantity(quantity);
+                cartObjectList.add(cartObject);
+                Cart cart = new Cart();
+                cart.setCartObjectList(cartObjectList);
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Map<String, Object> data = new HashMap<>();
+                data.put("items", cartObjectList);
+
+                mFirestore.collection("carts").document(user.getUid())
+                        .set(cart);
+//                        .set(data, SetOptions.merge());
+                // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
+            }
+        });
+
     }
 
     private void initToolbar() {
@@ -157,51 +221,6 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         Tools.setSystemBarColor(this);
     }
 
-    private void initComponent() {
-        Tools.displayImageOriginal(this, (ImageView) findViewById(R.id.image_1), R.drawable.image_shop_9);
-        Tools.displayImageOriginal(this, (ImageView) findViewById(R.id.image_2), R.drawable.image_shop_10);
-        Tools.displayImageOriginal(this, (ImageView) findViewById(R.id.image_3), R.drawable.image_shop_11);
-        Tools.displayImageOriginal(this, (ImageView) findViewById(R.id.image_4), R.drawable.image_shop_12);
-        Tools.displayImageOriginal(this, (ImageView) findViewById(R.id.image_5), R.drawable.image_shop_13);
-        tv_qty = (TextView) findViewById(R.id.tv_qty);
-        ((FloatingActionButton) findViewById(R.id.fab_qty_sub)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int qty = Integer.parseInt(tv_qty.getText().toString());
-                if (qty > 1) {
-                    qty--;
-                    tv_qty.setText(qty + "");
-                }
-            }
-        });
-
-        ((FloatingActionButton) findViewById(R.id.fab_qty_add)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int qty = Integer.parseInt(tv_qty.getText().toString());
-                if (qty < 10) {
-                    qty++;
-                    tv_qty.setText(qty + "");
-                }
-            }
-        });
-
-        ((AppCompatButton) findViewById(R.id.bt_add_to_cart)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(parent_view, "Add to Cart", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void setColor(View v) {
-        ((FloatingActionButton) v).setImageResource(R.drawable.ic_done);
-        for (int id : array_color_fab) {
-            if (v.getId() != id) {
-                ((FloatingActionButton) findViewById(id)).setImageResource(android.R.color.transparent);
-            }
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -226,5 +245,4 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
                     .hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
 }
