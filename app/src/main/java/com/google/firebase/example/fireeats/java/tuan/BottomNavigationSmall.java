@@ -143,13 +143,11 @@ public class BottomNavigationSmall extends AppCompatActivity {
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         } else {
-                            Map<String, Object> dataInit = new HashMap<>();
-                            dataInit.put("total", 0);
-                            dataInit.put("cartObjectList", new ArrayList<>());
+                            PaymentDetail paymentDetail = new PaymentDetail();
                             mFirestore
                                     .collection("paymentDetails")
                                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .set(dataInit);
+                                    .set(paymentDetail);
                             Log.d(TAG, "No such document");
                         }
                     } else {
