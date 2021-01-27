@@ -88,37 +88,30 @@ public class CartActivity extends AppCompatActivity {
         cartRef = mFirestore.collection("carts").document(user.getUid());
         recyclerView = mBinding.recyclerRestaurants;
 
-
-
-        cartRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        cartRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "Current data: " + document.getData());
+                        Cart cart = document.toObject(Cart.class);
+                        Log.d(TAG, "Current data: " + cart.getCartObjectList().size());
 
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                    Cart cart = snapshot.toObject(Cart.class);
-                    Log.d(TAG, "Current data: " + cart.getCartObjectList().size());
-
-                    cartObjectAdapter = new CartObjectAdapter(cart.getCartObjectList());
-                    recyclerView.setAdapter(cartObjectAdapter);
-                    cartObjectAdapter.notifyDataSetChanged();
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-//                    mBinding.recyclerRestaurants.setLayoutManager(new LinearLayoutManager(this));
-//        mBinding.recyclerRestaurants.addItemDecoration(new SpacingItemDecoration(2, Tools.dpToPx(this, 8), true));
-//                    recyclerView.setHasFixedSize(true);
+                        cartObjectAdapter = new CartObjectAdapter(cart.getCartObjectList());
+                        recyclerView.setAdapter(cartObjectAdapter);
+                        cartObjectAdapter.notifyDataSetChanged();
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
                 } else {
-                    Log.d(TAG, "Current data: null");
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
-
         // RecyclerView
 
 
