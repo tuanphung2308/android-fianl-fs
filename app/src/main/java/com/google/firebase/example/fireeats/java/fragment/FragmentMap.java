@@ -22,7 +22,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.helper.TaskDirectionRequest;
@@ -35,6 +38,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
 
     private LatLng deliveryAddress;
     private LatLng courierLocation;
+    private Marker courierMarker;
 
     private long UPDATE_INTERVAL = 10*1000; // 10 seconds
     private long FASTEST_INTERVAL = 2*1000; // 10 seconds
@@ -62,14 +66,15 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
         mMap = googleMap;
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         // TODO: INITIALIZE USER ADDRESS HERE
-        //
+        // deliveryAddress = ????
+        // updateCourierLocation();
 
         startLocationUpdate();
     }
 
     public void updateCourierLocation(){
         //TODO: ADD FIRESTORE GET COURIER LOCATION HERE
-        //
+        //courierLocation = newLocation;
     }
 
     @SuppressLint({"RestrictedApi", "MissingPermission"})
@@ -82,12 +87,25 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
             @Override
             public void onLocationResult(LocationResult locationResult){
                 new TaskDirectionRequest(mMap, getActivity()).execute(buildDirectionRequestUrl(courierLocation, deliveryAddress));
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(courierLocation);
+                builder.include(deliveryAddress);
+
+                LatLngBounds bounds = builder.build();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 150));
+
+                // TODO: Calculate rotation
+                if(courierMarker == null){
+                    courierMarker = mMap.addMarker(new MarkerOptions().position(courierLocation)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.top_down_courier_icon_50x50)));
+                } else{
+                    courierMarker.setPosition(courierLocation);
+                }
+
             }
         }, null);
 
     }
-
-    // Use this to draw polylines on map from courier to customer's address
 
     // Used to generate API request to get route from courier to customer's address
     private String buildDirectionRequestUrl(LatLng origin, LatLng destination) {
