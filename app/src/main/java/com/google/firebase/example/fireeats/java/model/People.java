@@ -17,5 +17,4 @@ public class People {
         this.name = name;
         this.section = section;
     }
-
 }

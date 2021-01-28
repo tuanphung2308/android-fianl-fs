@@ -81,7 +81,6 @@ public class FragmentShipping extends Fragment implements OnPaymentDetailSubmit 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mFirestore.collection("paymentDetails").document(user.getUid())
                 .set(pd, SetOptions.merge());
-
     }
 
     @Override

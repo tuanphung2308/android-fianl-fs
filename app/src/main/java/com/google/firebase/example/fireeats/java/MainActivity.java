@@ -33,6 +33,7 @@ import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.PaymentDetail;
 import com.google.firebase.example.fireeats.java.model.Product;
 import com.google.firebase.example.fireeats.java.model.Rating;
+import com.google.firebase.example.fireeats.java.model.User;
 import com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails;
 import com.google.firebase.example.fireeats.java.util.RatingUtil;
 import com.google.firebase.example.fireeats.java.util.RestaurantUtil;
@@ -199,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements OrderAdapter.OnOr
 
         startActivityForResult(intent, RC_SIGN_IN);
         mViewModel.setIsSigningIn(true);
+
     }
 
     private void showSignInErrorDialog(@StringRes int message) {

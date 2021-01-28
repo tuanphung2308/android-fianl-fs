@@ -5,25 +5,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <include layout="@layout/toolbar" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/pink_300"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentInsetStartWithNavigation="0dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <!--        <androidx.appcompat.widget.Toolbar-->
+        <!--            android:id="@+id/toolbar"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="?attr/actionBarSize"-->
+        <!--            android:background="@color/pink_300"-->
+        <!--            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+        <!--            app:contentInsetStartWithNavigation="0dp"-->
+        <!--            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+
         android:clipToPadding="false"
         android:padding="@dimen/spacing_large"
         android:scrollbars="none"
@@ -33,114 +36,126 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_large">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PERSONAL INFORMATION"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/grey_40"/>
+
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/editname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/grey_40">
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Name"
+                android:minHeight="@dimen/spacing_xmlarge"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/editemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/grey_40">
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Email"
+                android:minHeight="@dimen/spacing_xmlarge" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/edit_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/grey_40">
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Phone"
+                android:minHeight="@dimen/spacing_xmlarge" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="City" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="SHIPPING ADDRESS"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/grey_40"
+                app:fontFamily="sans-serif-medium" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/editaddress"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Address"
+                android:minHeight="@dimen/spacing_xmlarge"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
+                android:layout_marginTop="@dimen/spacing_middle"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/spn_state"
-                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    style="@style/EditText.Flat.Grey"
+
+                    android:layout_width="0dp"
+                    android:id="@+id/editspn_state"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_text_round_bg_outline"
+                    android:hint="Country"
+                    android:text="Vietnam"
+                    android:drawableEnd="@drawable/ic_expand_arrow"
+                    android:drawableRight="@drawable/ic_expand_arrow"
+                    android:minHeight="@dimen/spacing_xmlarge" />
+
+
+                <View
+                    android:layout_width="@dimen/spacing_middle"
+                    android:layout_height="0dp" />
+
+                <EditText
+                    style="@style/EditText.Flat.Grey"
+                    android:id="@+id/editzipcode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="State"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/grey_40" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:textColorHint="@color/grey_40">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Zip code*"
-                        android:inputType="number" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:background="@drawable/edit_text_round_bg_outline"
+                    android:hint="ZIP Code"
+                    android:minHeight="@dimen/spacing_xmlarge" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_middle" />
-
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/editcity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/grey_40">
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:drawableEnd="@drawable/ic_expand_arrow"
+                android:drawableRight="@drawable/ic_expand_arrow"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="City"
+                android:minHeight="@dimen/spacing_xmlarge" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone number"
-                    android:inputType="phone" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_mxlarge" />
-
-            <TextView
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/editstate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="* Required field"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:drawableEnd="@drawable/ic_expand_arrow"
+                android:drawableRight="@drawable/ic_expand_arrow"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="State / Province"
+                android:minHeight="@dimen/spacing_xmlarge" />
 
         </LinearLayout>
 

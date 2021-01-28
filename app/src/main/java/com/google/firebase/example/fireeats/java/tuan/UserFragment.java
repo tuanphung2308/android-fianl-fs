@@ -81,6 +81,7 @@ public class UserFragment extends Fragment {
 
         startActivityForResult(intent, RC_SIGN_IN);
         mViewModel.setIsSigningIn(true);
+
     }
 
     public void setmViewModel(MainActivityViewModel mViewModel) {
