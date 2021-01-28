@@ -39,7 +39,7 @@ import java.util.Map;
 public class FormProfileData extends AppCompatActivity {
 
     private String[] array_states;
-    private EditText editname, editEmail, editPhone, editAddress, editZipcode, editCity, editState;
+    private EditText editname, editEmail, editPhone, editAddress1, editAddress2;
 
     private String docId ="testuser";
 
@@ -77,28 +77,22 @@ public class FormProfileData extends AppCompatActivity {
                         editEmail.setText(wanguser.getEmail());
                         editPhone = (EditText) findViewById(R.id.edit_phone_number);
                         editPhone.setText(wanguser.getPhone());
-                        editAddress = (EditText) findViewById(R.id.editaddress);
-                        editAddress.setText(wanguser.getAddress());
-                        editZipcode = (EditText) findViewById(R.id.editzipcode);
-                        editZipcode.setText(wanguser.getZipcode());
-                        editCity = (EditText) findViewById(R.id.editcity);
-                        editCity.setText(wanguser.getCity());
-                        editState = (EditText) findViewById(R.id.editstate);
-                        editState.setText("Wang is here");
+                        editAddress1 = (EditText) findViewById(R.id.editaddress1);
+                        editAddress1.setText(wanguser.getAddress1());
+                        editAddress2 = (EditText) findViewById(R.id.editaddress2);
+                        editAddress2.setText(wanguser.getAddress1());
 
                     } else {
                         Log.d("TAG", "No such document");
-                        User newUser = new User(user.getDisplayName(), user.getEmail(), "1", "2", "3", "4","5");
+                        User newUser = new User(user.getDisplayName(), user.getEmail(), "1", "2", "3");
                         array_states = getResources().getStringArray(R.array.states);
                         editname = (EditText) findViewById(R.id.editname);
                         //editname.setText(user.getDisplayName());
                         editEmail=(EditText) findViewById(R.id.editemail);
                         //editEmail.setText(user.getEmail());
                         editPhone = (EditText) findViewById(R.id.edit_phone_number);
-                        editAddress = (EditText) findViewById(R.id.editaddress);
-                        editZipcode = (EditText) findViewById(R.id.editzipcode);
-                        editCity = (EditText) findViewById(R.id.editcity);
-                        editState = (EditText) findViewById(R.id.editstate);
+                        editAddress1 = (EditText) findViewById(R.id.editaddress1);
+                        editAddress2 = (EditText) findViewById(R.id.editaddress2);
                         db.collection("users").document(user.getUid())
                             .set(newUser, SetOptions.merge());
                     }
@@ -135,12 +129,7 @@ public class FormProfileData extends AppCompatActivity {
     }
 
     private void initComponent() {
-        ((Button) findViewById(R.id.editspn_state)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showStateChoiceDialog((Button) v);
-            }
-        });
+
     }
 
     private void showStateChoiceDialog(final Button bt) {
@@ -177,12 +166,10 @@ public class FormProfileData extends AppCompatActivity {
             System.out.println(db);
 
             wanguser.setName(editname.getText().toString());
-            wanguser.setAddress(editAddress.getText().toString());
-            wanguser.setCity(editCity.getText().toString());
+            wanguser.setAddress1(editAddress1.getText().toString());
+            wanguser.setAddress2(editAddress2.getText().toString());
             wanguser.setEmail(editEmail.getText().toString());
             wanguser.setPhone(editPhone.getText().toString());
-            wanguser.setState(editState.getText().toString());
-            wanguser.setZipcode(editZipcode.getText().toString());
 
             db.collection("users").document(user.getUid())
                 .set(wanguser, SetOptions.merge());

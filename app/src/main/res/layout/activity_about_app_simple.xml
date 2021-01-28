@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MaterialX App"
+                android:text="ThreeButtonsApp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/grey_90"
                 app:fontFamily="sans-serif-light" />
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3.24.0.11.1"
+                    android:text="First Generation"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_90" />
 
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="February 2018"
+                    android:text="1/28/2021"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_90" />
 

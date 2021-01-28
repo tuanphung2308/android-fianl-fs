@@ -88,7 +88,7 @@
 
             <EditText
                 style="@style/EditText.Flat.Grey"
-                android:id="@+id/editaddress"
+                android:id="@+id/editaddress1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large"
@@ -96,66 +96,28 @@
                 android:hint="Address"
                 android:minHeight="@dimen/spacing_xmlarge"/>
 
+            <EditText
+                android:id="@+id/editaddress2"
+                style="@style/EditText.Flat.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Address"
+                android:minHeight="@dimen/spacing_xmlarge" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:orientation="horizontal">
 
-                <Button
-                    style="@style/EditText.Flat.Grey"
-
-                    android:layout_width="0dp"
-                    android:id="@+id/editspn_state"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/edit_text_round_bg_outline"
-                    android:hint="Country"
-                    android:text="Vietnam"
-                    android:drawableEnd="@drawable/ic_expand_arrow"
-                    android:drawableRight="@drawable/ic_expand_arrow"
-                    android:minHeight="@dimen/spacing_xmlarge" />
-
 
                 <View
                     android:layout_width="@dimen/spacing_middle"
                     android:layout_height="0dp" />
 
-                <EditText
-                    style="@style/EditText.Flat.Grey"
-                    android:id="@+id/editzipcode"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/edit_text_round_bg_outline"
-                    android:hint="ZIP Code"
-                    android:minHeight="@dimen/spacing_xmlarge" />
-
             </LinearLayout>
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:id="@+id/editcity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_middle"
-                android:drawableEnd="@drawable/ic_expand_arrow"
-                android:drawableRight="@drawable/ic_expand_arrow"
-                android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="City"
-                android:minHeight="@dimen/spacing_xmlarge" />
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:id="@+id/editstate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_middle"
-                android:drawableEnd="@drawable/ic_expand_arrow"
-                android:drawableRight="@drawable/ic_expand_arrow"
-                android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="State / Province"
-                android:minHeight="@dimen/spacing_xmlarge" />
 
         </LinearLayout>
 

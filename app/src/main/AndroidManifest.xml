@@ -41,6 +41,9 @@
             android:name=".java.tuan.ShoppingCartSimple"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".java.tuan.FormProfileData"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".java.tuan.ShoppingProductAdvDetails"
             android:screenOrientation="portrait" />
         <activity

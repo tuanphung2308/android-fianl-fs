@@ -4,44 +4,18 @@ public class User {
     String name = "";
     String email = "";
     String phone = "";
-    String address = "";
-    String zipcode = "", city = "", state = "";
+    String address1 = "";
+    String address2 = "";
 
-    public User(String name, String email, String phone, String address, String zipcode, String city, String state) {
+    public User() {
+    }
+
+    public User(String name, String email, String phone, String address1, String address2) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.state = state;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public User() {
+        this.address1 = address1;
+        this.address2 = address2;
     }
 
     public String getName() {
@@ -56,8 +30,8 @@ public class User {
         return email;
     }
 
-    public void setEmail(String gmail) {
-        this.email = gmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
@@ -68,11 +42,19 @@ public class User {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
     }
 }
