@@ -132,7 +132,7 @@ public class OrderViewActivity extends AppCompatActivity {
 
     private void openMapProgressView() {
         Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra("fuck you", "fuck");
+        intent.putExtra("fuck you", orderId);
         startActivity(intent);
     }
 

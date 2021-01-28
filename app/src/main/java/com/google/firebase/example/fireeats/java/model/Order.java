@@ -12,8 +12,35 @@ public class Order {
     private Double latitude = new Double(69.696969696969);
     private Double longitude = new Double(69.696969696969);
     private String orderStatus = "PROCESSING"; //DONE
-    private PaymentDetail paymentDetail  = new PaymentDetail();
+    private PaymentDetail paymentDetail = new PaymentDetail();
     private Date createdDate = new Date();
+    private String driverID = "";
+    private Double driverLatitude = new Double(69.696969696969);
+    private Double driverLongitude = new Double(69.696969696969);
+
+    public Double getDriverLatitude() {
+        return driverLatitude;
+    }
+
+    public void setDriverLatitude(Double driverLatitude) {
+        this.driverLatitude = driverLatitude;
+    }
+
+    public Double getDriverLongitude() {
+        return driverLongitude;
+    }
+
+    public void setDriverLongitude(Double driverLongitude) {
+        this.driverLongitude = driverLongitude;
+    }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
+    }
 
     private List<CartObject> cartObjectList = new ArrayList<>();
 

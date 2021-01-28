@@ -61,7 +61,7 @@ public class TaskParseDirection extends AsyncTask<String, Void, List<List<HashMa
             }
             polylineOptions.addAll(points);
             polylineOptions.width(15f);
-            polylineOptions.color(Color.BLACK);
+            polylineOptions.color(Color.WHITE);
             polylineOptions.geodesic(true);
         }
         if (polylineOptions != null) {
