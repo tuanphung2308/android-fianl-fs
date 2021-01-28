@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.activities.MapActivity;
 import com.google.firebase.example.fireeats.java.adapter.OrderCartObjectAdapter;
 import com.google.firebase.example.fireeats.java.model.Order;
 import com.google.firebase.example.fireeats.java.utils.Tools;
@@ -35,7 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
-public class ShoppingCheckoutTimeline extends AppCompatActivity {
+public class OrderViewActivity extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
     private static final String TAG = "ShoppingCheckoutTL";
@@ -130,7 +131,7 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
     }
 
     private void openMapProgressView() {
-        Intent intent = new Intent(this, BottomSheetMap.class);
+        Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("fuck you", "fuck");
         startActivity(intent);
     }

@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.fragment.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.activities.AboutActivity;
+import com.google.firebase.example.fireeats.java.activities.ProfileFormActivity;
 import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
 
 import java.util.Collections;
@@ -39,7 +41,7 @@ public class UserFragment extends Fragment {
         about_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent picture_intent = new Intent(getActivity(), AboutAppSimple.class);
+                Intent picture_intent = new Intent(getActivity(), AboutActivity.class);
                 startActivity(picture_intent);
             }
         });

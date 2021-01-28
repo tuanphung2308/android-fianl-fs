@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.activities.ShoppingCartActivity;
 import com.google.firebase.example.fireeats.java.model.Cart;
 import com.google.firebase.example.fireeats.java.model.CartObject;
 import com.google.firebase.example.fireeats.java.model.Product;
@@ -39,7 +40,7 @@ import com.google.firebase.firestore.Transaction;
 
 import java.util.List;
 
-public class ShoppingProductAdvDetails extends AppCompatActivity
+public class ProductDetailActivity extends AppCompatActivity
         implements EventListener<DocumentSnapshot> {
 
     private static final String TAG = "RestaurantDetail";
@@ -267,7 +268,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else {
-            Intent intent = new Intent(this, ShoppingCartSimple.class);
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
             intent.putExtra("fuck you", "fuck");
             startActivity(intent);
         }

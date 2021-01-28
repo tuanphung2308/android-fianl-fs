@@ -3,8 +3,6 @@ package com.google.firebase.example.fireeats.java.adapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.example.fireeats.java.tuan.SmartFragmentStatePagerAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 

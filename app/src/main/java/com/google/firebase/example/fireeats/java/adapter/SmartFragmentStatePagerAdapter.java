@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.adapter;
 
 import android.util.SparseArray;
 import android.view.ViewGroup;

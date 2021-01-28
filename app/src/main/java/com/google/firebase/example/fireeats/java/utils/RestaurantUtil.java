@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.util;
+package com.google.firebase.example.fireeats.java.utils;
 
 import android.content.Context;
 

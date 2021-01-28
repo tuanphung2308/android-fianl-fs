@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.AdapterGridShopCategory;
 import com.google.firebase.example.fireeats.java.data.DataGenerator;
 import com.google.firebase.example.fireeats.java.model.ShopCategory;
+import com.google.firebase.example.fireeats.java.activities.ListProductViewActivity;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.example.fireeats.java.widget.SpacingItemDecoration;
 
@@ -50,7 +51,7 @@ public class CategoryFragment extends Fragment {
         mAdapter.setOnItemClickListener(new AdapterGridShopCategory.OnItemClickListener() {
             @Override
             public void onItemClick(View view, ShopCategory obj, int position) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, obj.title);
                 startActivity(intent);

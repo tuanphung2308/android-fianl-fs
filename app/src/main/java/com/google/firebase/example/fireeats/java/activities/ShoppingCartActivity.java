@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -33,7 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 
-public class ShoppingCartSimple extends AppCompatActivity {
+public class ShoppingCartActivity extends AppCompatActivity {
 
     private DocumentReference cartRef;
     private CartObjectAdapter cartObjectAdapter;
@@ -128,7 +128,7 @@ public class ShoppingCartSimple extends AppCompatActivity {
     public void onCheckOut(View view) {
         if (cartObjectAdapter.getItemCount() > 0) {
             finish();
-            Intent intent = new Intent(this, ShoppingCheckoutStep.class);
+            Intent intent = new Intent(this, CheckOutActivity.class);
             intent.putExtra("fuck you", "fuck");
             startActivity(intent);
         }

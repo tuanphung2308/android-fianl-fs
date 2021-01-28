@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.activities.HomeActivity;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 
 public class VerificationCode extends AppCompatActivity {

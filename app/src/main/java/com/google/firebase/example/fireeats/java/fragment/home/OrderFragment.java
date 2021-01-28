@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,28 +6,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
-import com.google.firebase.example.fireeats.java.adapter.AdapterListBasic;
+import com.google.firebase.example.fireeats.java.activities.OrderViewActivity;
 import com.google.firebase.example.fireeats.java.adapter.OrderAdapter;
-import com.google.firebase.example.fireeats.java.data.DataGenerator;
 import com.google.firebase.example.fireeats.java.model.Order;
-import com.google.firebase.example.fireeats.java.model.People;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-
-import java.util.List;
 
 public class OrderFragment extends Fragment implements OrderAdapter.OnOrderSelectedListener {
 
@@ -115,7 +109,7 @@ public class OrderFragment extends Fragment implements OrderAdapter.OnOrderSelec
     @Override
     public void onOrderSelected(DocumentSnapshot snapshot) {
         Order order = snapshot.toObject(Order.class);
-        Intent intent = new Intent(getActivity(), ShoppingCheckoutTimeline.class);
+        Intent intent = new Intent(getActivity(), OrderViewActivity.class);
         Log.d("WANGISNOOB", snapshot.getReference().getId());
         intent.putExtra("ORDERID", snapshot.getReference().getId());
         startActivity(intent);

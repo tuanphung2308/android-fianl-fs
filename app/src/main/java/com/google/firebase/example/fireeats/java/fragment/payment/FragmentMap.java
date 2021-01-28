@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.fragment;
+package com.google.firebase.example.fireeats.java.fragment.payment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

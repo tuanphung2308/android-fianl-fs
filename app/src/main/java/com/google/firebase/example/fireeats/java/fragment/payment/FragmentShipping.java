@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.fragment;
+package com.google.firebase.example.fireeats.java.fragment.payment;
 
 import android.content.Intent;
 import android.os.Bundle;

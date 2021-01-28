@@ -24,13 +24,9 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <activity
-            android:name=".java.MainActivity"
-            android:theme="@style/AppTheme.Activity"></activity>
-
-        <activity
-            android:name=".java.tuan.ShoppingProductGrid"
+            android:name=".java.activities.ListProductViewActivity"
             android:theme="@style/AppTheme.Activity" />
-        <activity android:name=".java.tuan.HomeActivity">
+        <activity android:name=".java.activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,32 +34,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".java.tuan.ShoppingCartSimple"
+            android:name=".java.activities.ShoppingCartActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.tuan.ProfileFormActivity"
+            android:name=".java.activities.ProfileFormActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.tuan.ShoppingProductAdvDetails"
+            android:name=".java.activities.ProductDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.tuan.ShoppingCheckoutStep"
+            android:name=".java.activities.CheckOutActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".java.tuan.ShoppingCheckoutTimeline"
+            android:name=".java.activities.OrderViewActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".java.tuan.AboutAppSimple"
+            android:name=".java.activities.AboutActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".java.tuan.BottomSheetMap"
+            android:name=".java.activities.MapActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".java.tuan.ArticleSimple"
+            android:name=".java.activities.ArticleActivity"
             android:screenOrientation="portrait"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <service android:name=".java.services.MyFirebaseService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

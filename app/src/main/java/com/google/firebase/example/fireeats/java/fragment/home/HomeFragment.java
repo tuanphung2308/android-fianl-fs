@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.fragment.home;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -15,14 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.example.fireeats.R;
+import com.google.firebase.example.fireeats.java.activities.ArticleActivity;
 import com.google.firebase.example.fireeats.java.adapter.AdapterSnapGeneric;
 import com.google.firebase.example.fireeats.java.data.DataGenerator;
 import com.google.firebase.example.fireeats.java.helper.StartSnapHelper;
 import com.google.firebase.example.fireeats.java.model.Image;
+import com.google.firebase.example.fireeats.java.activities.ProductDetailActivity;
+import com.google.firebase.example.fireeats.java.activities.ListProductViewActivity;
 
 import java.util.List;
 
-import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails.KEY_RESTAURANT_ID;
+import static com.google.firebase.example.fireeats.java.activities.ProductDetailActivity.KEY_RESTAURANT_ID;
 
 public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemClickListener {
     private static final String KEY_CATEGORY_ID = "CATEGORY";
@@ -37,7 +40,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         desktopCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Gaming Desktop");
                 startActivity(intent);
@@ -50,7 +53,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         laptopCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Gaming Laptop");
                 startActivity(intent);
@@ -63,7 +66,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         kbCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Mouse and Keyboard");
                 startActivity(intent);
@@ -76,7 +79,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         headphoneCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Headphones");
                 startActivity(intent);
@@ -89,7 +92,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         monitorCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Monitors");
                 startActivity(intent);
@@ -102,7 +105,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         storageCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Storage");
                 startActivity(intent);
@@ -115,7 +118,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         chairCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Gaming Chair");
                 startActivity(intent);
@@ -128,7 +131,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         tableCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ShoppingProductGrid.class);
+                Intent intent = new Intent(v.getContext(), ListProductViewActivity.class);
 
                 intent.putExtra(KEY_CATEGORY_ID, "Gaming Table");
                 startActivity(intent);
@@ -139,7 +142,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                 intent.putExtra(KEY_RESTAURANT_ID, "0bhMNWme1Bs8BNFhb2X0");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
@@ -149,7 +152,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         linear2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                 intent.putExtra(KEY_RESTAURANT_ID, "1PvAS6PazqE1dGuj5r9Z");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
@@ -159,7 +162,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
         linear3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                 intent.putExtra(KEY_RESTAURANT_ID, "1nMbXcL0CAc709Oo1KvZ");
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
@@ -197,7 +200,7 @@ public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemC
 
     @Override
     public void onItemClick(View view, Image obj, int position) {
-        Intent intent = new Intent(getActivity(), ArticleSimple.class);
+        Intent intent = new Intent(getActivity(), ArticleActivity.class);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }

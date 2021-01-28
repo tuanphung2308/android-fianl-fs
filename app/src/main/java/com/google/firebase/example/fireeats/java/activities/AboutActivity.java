@@ -1,6 +1,5 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,37 +11,39 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 
-public class ArticleSimple extends AppCompatActivity {
+
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article_simple);
+        setContentView(R.layout.activity_about_app_simple);
         initToolbar();
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("About");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.setSystemBarColor(this, R.color.grey_10);
+        Tools.setSystemBarColor(this, R.color.grey_5);
         Tools.setSystemBarLight(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_article_share_save, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         Tools.changeMenuIconColor(menu, getResources().getColor(R.color.grey_60));
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else {
-            Toast.makeText(getApplicationContext(), item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.example.fireeats.R;
-import com.google.firebase.example.fireeats.databinding.ItemRestaurantBinding;
 import com.google.firebase.example.fireeats.databinding.ItemShopProductCardBinding;
 import com.google.firebase.example.fireeats.java.model.Product;
-import com.google.firebase.example.fireeats.java.util.RestaurantUtil;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 

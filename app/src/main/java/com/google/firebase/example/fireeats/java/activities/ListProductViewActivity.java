@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,9 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
-import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails.KEY_RESTAURANT_ID;
-
-public class ShoppingProductGrid extends AppCompatActivity
+public class ListProductViewActivity extends AppCompatActivity
         implements RestaurantAdapter.OnRestaurantSelectedListener {
     public static final String KEY_RESTAURANT_ID = "key_restaurant_id";
     private static final String KEY_CATEGORY_ID = "CATEGORY";
@@ -104,7 +101,7 @@ public class ShoppingProductGrid extends AppCompatActivity
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else {
-            Intent intent = new Intent(this, ShoppingCartSimple.class);
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
             intent.putExtra("fuck you", "fuck");
             startActivity(intent);
         }
@@ -132,7 +129,7 @@ public class ShoppingProductGrid extends AppCompatActivity
     @Override
     public void onRestaurantSelected(DocumentSnapshot restaurant) {
         // Go to the details page for the selected restaurant
-        Intent intent = new Intent(this, ShoppingProductAdvDetails.class);
+        Intent intent = new Intent(this, ProductDetailActivity.class);
 //        Intent intent = new Intent(this, RestaurantDetailActivity.class);
         intent.putExtra(KEY_RESTAURANT_ID, restaurant.getId());
         startActivity(intent);

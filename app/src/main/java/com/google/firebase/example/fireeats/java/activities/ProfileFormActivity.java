@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;

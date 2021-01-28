@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -23,8 +24,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,17 +31,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.adapter.BottomBarAdapter;
 import com.google.firebase.example.fireeats.java.adapter.NoSwipePager;
-import com.google.firebase.example.fireeats.java.model.Cart;
+import com.google.firebase.example.fireeats.java.fragment.home.CategoryFragment;
 import com.google.firebase.example.fireeats.java.model.PaymentDetail;
+import com.google.firebase.example.fireeats.java.fragment.home.HomeFragment;
+import com.google.firebase.example.fireeats.java.fragment.home.OrderFragment;
+import com.google.firebase.example.fireeats.java.fragment.home.UserFragment;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,6 +73,24 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_small);
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        Log.d("FIREBASE TOKEN FUCK YOU", token);
+                        Toast.makeText(HomeActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         Places.initialize(getApplicationContext(), "AIzaSyCr2k5mtuFQSSS753K-If6OFXInjMYKhi4");
         Places.createClient(this);
@@ -264,7 +281,7 @@ public class HomeActivity extends AppCompatActivity {
         int item_id = item.getItemId();
         if (item_id == R.id.action_cart) {
             //go to cart
-            Intent intent = new Intent(this, ShoppingCartSimple.class);
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
             intent.putExtra("fuck you", "fuck");
             startActivity(intent);
         }

@@ -1,4 +1,4 @@
-package com.google.firebase.example.fireeats.java.tuan;
+package com.google.firebase.example.fireeats.java.activities;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.utils.Tools;
 
-public class BottomSheetMap extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity {
 
     private GoogleMap mMap;
     private BottomSheetBehavior bottomSheetBehavior;

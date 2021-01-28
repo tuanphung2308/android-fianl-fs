@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.model.Product;
-import com.google.firebase.example.fireeats.java.util.RestaurantUtil;
+import com.google.firebase.example.fireeats.java.utils.RestaurantUtil;
 import com.google.firebase.firestore.Query;
 
 /**

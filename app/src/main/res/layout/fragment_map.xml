@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".java.fragment.FragmentMap">
+    tools:context=".java.fragment.payment.FragmentMap">
 
     <fragment
         android:id="@+id/map"
