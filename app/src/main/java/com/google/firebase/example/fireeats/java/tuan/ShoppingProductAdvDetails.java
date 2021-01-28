@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Transaction;
+
 import java.util.List;
 
 public class ShoppingProductAdvDetails extends AppCompatActivity
@@ -226,6 +228,7 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
                             @Override
                             public void onSuccess(Cart result) {
                                 Log.d(TAG, "Transaction success: " + result.getCartObjectList().size());
+                                showSuccessfulSnack();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -237,6 +240,11 @@ public class ShoppingProductAdvDetails extends AppCompatActivity
             }
         });
 
+    }
+
+    private void showSuccessfulSnack() {
+        Snackbar
+                .make(findViewById(R.id.parent_view), "Added to cart", Snackbar.LENGTH_LONG).show();
     }
 
     private void initToolbar() {

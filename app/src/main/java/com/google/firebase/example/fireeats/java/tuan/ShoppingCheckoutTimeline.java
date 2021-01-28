@@ -1,7 +1,9 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,7 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
@@ -64,6 +69,7 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
         shippingAddress2.setEnabled(false);
         paymentType.setEnabled(false);
 
+
         Intent intent = getIntent();
         orderId = intent.getStringExtra("ORDERID");
 
@@ -72,6 +78,7 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
 
         DocumentReference docRef = mFirestore.collection("orders").document(orderId);
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
@@ -96,6 +103,11 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
                     shippingAddress1.setText(order.getPaymentDetail().getAddress1());
                     shippingAddress2.setText(order.getPaymentDetail().getAddress2());
                     paymentType.setText(order.getPaymentType());
+
+                    if (order.getOrderStatus().equals("DONE") || order.getOrderStatus().equals("CANCELLED")) {
+                        cancelOrderButton.setEnabled(false);
+                        cancelOrderButton.setBackgroundTintList(getResources().getColorStateList(R.color.greyDisabled));
+                    }
                 } else {
                     Log.d(TAG, "Current data: null");
                 }
@@ -105,8 +117,7 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
         ((AppCompatButton) findViewById(R.id.cancelOrderButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                order.setOrderStatus("CANCELLED");
-                mFirestore.collection("orders").document(orderId).set(order);
+                confirmCancelOrder();
             }
         });
 
@@ -150,5 +161,22 @@ public class ShoppingCheckoutTimeline extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmCancelOrder() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Confirmation")
+                .setMessage("Do you want to cancel this order")
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        order.setOrderStatus("CANCELLED");
+                        mFirestore.collection("orders").document(orderId).set(order);
+                        cancelOrderButton.setEnabled(false);
+                    }
+                })
+                .setPositiveButton("No", null)
+                .show();
+
     }
 }

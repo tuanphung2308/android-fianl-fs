@@ -41,7 +41,7 @@
             android:name=".java.tuan.ShoppingCartSimple"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".java.tuan.FormProfileData"
+            android:name=".java.tuan.ProfileFormActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".java.tuan.ShoppingProductAdvDetails"
@@ -51,6 +51,12 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".java.tuan.ShoppingCheckoutTimeline"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".java.tuan.AboutAppSimple"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".java.tuan.BottomSheetMap"
             android:screenOrientation="portrait"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

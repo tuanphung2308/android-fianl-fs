@@ -36,12 +36,10 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FormProfileData extends AppCompatActivity {
+public class ProfileFormActivity extends AppCompatActivity {
 
     private String[] array_states;
     private EditText editname, editEmail, editPhone, editAddress1, editAddress2;
-
-    private String docId ="testuser";
 
     private final FirebaseFirestore db = FirebaseService.getInstance().getDb();
     User wanguser = new User();

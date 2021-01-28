@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
@@ -73,6 +74,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_small);
+
+        Places.initialize(getApplicationContext(), "AIzaSyCr2k5mtuFQSSS753K-If6OFXInjMYKhi4");
+        Places.createClient(this);
 
         // Enable Firestore logging
         FirebaseFirestore.setLoggingEnabled(true);
@@ -245,8 +249,6 @@ public class HomeActivity extends AppCompatActivity {
 
         final MenuItem menu_notif = menu.findItem(R.id.action_cart);
         View actionView = MenuItemCompat.getActionView(menu_notif);
-        notif_badge = actionView.findViewById(R.id.notif_badge);
-        setupBadge();
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,15 +269,6 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setupBadge() {
-        if (notif_badge == null) return;
-        if (notification_count == 0) {
-            notif_badge.setVisibility(View.GONE);
-        } else {
-            notif_badge.setVisibility(View.VISIBLE);
-        }
     }
 
     private boolean shouldStartSignIn() {

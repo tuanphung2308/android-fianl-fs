@@ -61,6 +61,8 @@ public class FragmentConfirmation extends Fragment implements OnPaymentDetailSub
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
         RadioGroup radioGroup = root.findViewById(R.id.radioGroup);
+        ((TextView) root.findViewById(R.id.userName)).setText(user.getDisplayName());
+        ((TextView) root.findViewById(R.id.userEmail)).setText(user.getEmail());
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -79,16 +79,38 @@
             android:textColor="@color/grey_40"
             app:fontFamily="sans-serif-medium" />
 
-        <EditText
-            android:id="@+id/address1EditText"
-            style="@style/EditText.Flat.Grey"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/grey_60"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/ic_baseline_location_on_24"
+            app:endIconMode="custom"
+            app:endIconTint="@color/grey_60">
+
+            <EditText
+                android:id="@+id/address1EditText"
+                style="@style/EditText.Flat.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:clickable="true"
+                android:background="@drawable/edit_text_round_bg_outline"
+                android:hint="Address"
+                android:minHeight="@dimen/spacing_xmlarge"
+                android:text="" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
             android:layout_marginTop="@dimen/spacing_large"
-            android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Address 1"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:text="" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONTACT DETAILS"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/grey_40"
+            app:fontFamily="sans-serif-medium" />
 
         <EditText
             android:id="@+id/address2EditText"

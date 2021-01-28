@@ -15,24 +15,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/spacing_large">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PAYMENT DETAILS"
+                android:text="PAYMENT TYPE"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/grey_40"
                 app:fontFamily="sans-serif-medium" />
-
-            <ImageView
-                android:layout_width="@dimen/spacing_xmlarge"
-                android:layout_height="@dimen/spacing_large"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_visa" />
-
-            <EditText
+            <Spinner
+                android:id="@+id/spinner"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/grey_40"
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,11 +33,20 @@
                 android:drawableEnd="@drawable/ic_expand_arrow"
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:drawableRight="@drawable/ic_expand_arrow"
-                android:hint="Card Type"
+                android:hint="Payment Type"
                 android:minHeight="@dimen/spacing_xmlarge"
-                android:text="Visa Express" />
+                />
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAYMENT DETAILS"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/grey_40"
+                app:fontFamily="sans-serif-medium" />
 
             <EditText
+                android:id="@+id/cardId"
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,6 +59,7 @@
                 android:text="88543 - 7043 - 2461 - 1195" />
 
             <EditText
+                android:id="@+id/cardName"
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,6 +72,7 @@
                 android:text="Laura Michelle" />
 
             <LinearLayout
+                android:id="@+id/expireLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_middle"
@@ -110,6 +114,7 @@
             android:background="@color/grey_10" />
 
         <LinearLayout
+            android:id="@+id/saveCardInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_large"

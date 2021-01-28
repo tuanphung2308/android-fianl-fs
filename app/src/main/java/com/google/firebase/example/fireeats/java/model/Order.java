@@ -9,8 +9,8 @@ public class Order {
     private Integer totalIncShipping = 0;
     private String firebaseUID = "";
     private String paymentType = "";
-    private Integer latitude = -34;
-    private Integer longitude = 151;
+    private Double latitude = new Double(69.696969696969);
+    private Double longitude = new Double(69.696969696969);
     private String orderStatus = "PROCESSING"; //DONE
     private PaymentDetail paymentDetail  = new PaymentDetail();
     private Date createdDate = new Date();
@@ -68,19 +68,19 @@ public class Order {
         this.paymentType = paymentType;
     }
 
-    public Integer getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Integer latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public Integer getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Integer longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

@@ -9,13 +9,23 @@ public class PaymentDetail {
     private String address2 = "";
     private String phoneNumber = "";
     private String email = "";
+    private Double latitude = new Double(69.696966969696969);
+    private Double longitude = new Double(69.696966969696969);
 
-    public PaymentDetail(String name, String address1, String address2, String phoneNumber, String email) {
-        this.name = name;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public PaymentDetail() {

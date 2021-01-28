@@ -1,7 +1,4 @@
 <resources>
-
-    <style name="AppTheme" parent="BaseTheme" />
-
     <style name="AppTheme.Material" parent="BaseTheme.Material" />
 
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -19,6 +16,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorOnSurface">#212121</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/blue_grey_600</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
@@ -243,6 +241,7 @@
     </style>
 
     <style name="AppTheme.Dialog.NoActionBar" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorOnSurface">#212121</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -262,16 +261,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-<!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">-->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
-<!--        <item name="android:textColorPrimary">@color/greyPrimary</item>-->
-<!--        <item name="android:textColorSecondary">@color/greySecondary</item>-->
+        <item name="android:textColorPrimary">@color/greyPrimary</item>
+        <item name="android:textColorSecondary">@color/greySecondary</item>
 
-<!--        <item name="android:actionOverflowButtonStyle">@style/AppTheme.Overflow</item>-->
-<!--    </style>-->
+        <item name="android:actionOverflowButtonStyle">@style/AppTheme.Overflow</item>
+    </style>
 
     <style name="AppTheme.Activity" parent="AppTheme" />
 
@@ -356,5 +355,8 @@
     <style name="AppTheme.PizzaGuy">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">150dp</item>
+    </style>
+
+    <style name="TuanTextLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
     </style>
 </resources>

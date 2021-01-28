@@ -1,5 +1,6 @@
 package com.google.firebase.example.fireeats.java.tuan;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.viewmodel.MainActivityViewModel;
 
@@ -23,31 +25,13 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         LinearLayout personal_detail_ll = (LinearLayout) view.findViewById(R.id.personal_detail_ll);
-        LinearLayout noti_ll = (LinearLayout) view.findViewById(R.id.noti_ll);
-        LinearLayout payment_ll = (LinearLayout) view.findViewById(R.id.payment_ll);
         LinearLayout about_ll = (LinearLayout) view.findViewById(R.id.about_ll);
         LinearLayout logout_ll = (LinearLayout) view.findViewById(R.id.logout_ll);
-
-        payment_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent picture_intent = new Intent(getActivity(), PaymentProfile.class);
-                startActivity(picture_intent);
-            }
-        });
 
         personal_detail_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent picture_intent = new Intent(getActivity(), FormProfileData.class);
-                startActivity(picture_intent);
-            }
-        });
-
-        noti_ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent picture_intent = new Intent(getActivity(), SettingSectioned.class);
+                Intent picture_intent = new Intent(getActivity(), ProfileFormActivity.class);
                 startActivity(picture_intent);
             }
         });
@@ -63,8 +47,7 @@ public class UserFragment extends Fragment {
         logout_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthUI.getInstance().signOut(getActivity());
-                startSignIn();
+                logout();
             }
         });
         //more code here
@@ -86,5 +69,20 @@ public class UserFragment extends Fragment {
 
     public void setmViewModel(MainActivityViewModel mViewModel) {
         this.mViewModel = mViewModel;
+    }
+
+    public void logout() {
+        new MaterialAlertDialogBuilder(getActivity())
+                .setTitle("Confirmation")
+                .setMessage("Do you want to logout")
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AuthUI.getInstance().signOut(getActivity());
+                        startSignIn();
+                    }
+                })
+                .setPositiveButton("No", null)
+                .show();
     }
 }

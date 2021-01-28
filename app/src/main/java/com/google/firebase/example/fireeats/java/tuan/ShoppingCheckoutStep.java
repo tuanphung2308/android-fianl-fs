@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.example.fireeats.R;
@@ -84,6 +85,9 @@ public class ShoppingCheckoutStep extends AppCompatActivity {
         order.setTotalIncShipping(orderData.getTotalIncShipping());
         order.setFirebaseUID(user.getUid());
         order.setPaymentDetail(fragmentShipping.getPaymentDetail());
+        order.setLatitude(fragmentShipping.getPaymentDetail().getLatitude());
+        order.setLongitude(fragmentShipping.getPaymentDetail().getLongitude());
+        order.setPaymentType(fragmentPayment.getPaymentType());
         mFirestore.collection("orders").document(new Date().getTime() + "-" + user.getUid()).set(order);
 
         Map<String, Object> dataInit = new HashMap<>();
