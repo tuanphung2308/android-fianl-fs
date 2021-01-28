@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import androidx.cardview.widget.CardView;
@@ -21,8 +22,12 @@ import com.google.firebase.example.fireeats.java.model.Image;
 
 import java.util.List;
 
+import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails.KEY_RESTAURANT_ID;
+
 public class HomeFragment extends Fragment {
     private static final String KEY_CATEGORY_ID = "CATEGORY";
+    private LinearLayout linear1, linear2, linear3;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -130,7 +135,36 @@ public class HomeFragment extends Fragment {
                 // do whatever you want to do on click (to launch any fragment or activity you need to put intent here.)
             }
         });
-
+        linear1 = view.findViewById(R.id.linear1);
+        linear1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                intent.putExtra(KEY_RESTAURANT_ID, "0bhMNWme1Bs8BNFhb2X0");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            }
+        });
+        linear2 = view.findViewById(R.id.linear2);
+        linear2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                intent.putExtra(KEY_RESTAURANT_ID, "1PvAS6PazqE1dGuj5r9Z");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            }
+        });
+        linear3 = view.findViewById(R.id.linear3);
+        linear3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ShoppingProductAdvDetails.class);
+                intent.putExtra(KEY_RESTAURANT_ID, "1nMbXcL0CAc709Oo1KvZ");
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            }
+        });
         //more code here
         return view;
     }

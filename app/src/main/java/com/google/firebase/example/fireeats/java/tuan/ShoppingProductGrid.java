@@ -28,7 +28,7 @@ import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvD
 
 public class ShoppingProductGrid extends AppCompatActivity
         implements RestaurantAdapter.OnRestaurantSelectedListener {
-
+    public static final String KEY_RESTAURANT_ID = "key_restaurant_id";
     private static final String KEY_CATEGORY_ID = "CATEGORY";
     private RecyclerView recyclerView;
 
