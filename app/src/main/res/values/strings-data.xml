@@ -2,18 +2,17 @@
 <resources>
 
     <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
-        \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
+        Địa Điểm Áp Dụng : Tất cả chi nhánh Tin Học Ngôi Sao
     </string>
 
     <string name="short_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
 
     <string name="middle_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin</string>
-    <string name="medium_lorem_ipsum">Eating good food where you want to eat</string>
+    <string name="medium_lorem_ipsum">Lưu ý:</string>
 
     <string name="long_lorem_ipsum">
-        Duis tellus metus, elementum a lectus id, aliquet interdum mauris. Nam bibendum efficitur sollicitudin. Proin eleifend libero velit, nec fringilla dolor finibus quis. nMorbi eu libero pellentesque, rutrum metus quis, blandit est. Fusce bibendum accumsan nisi vulputate feugiat. In fermentum laoreet euismod. Praesent sem nisl, facilisis eget odio at, rhoncus scelerisque ipsum. Nulla orci dui, dignissim a risus ut, lobortis porttitor velit.
-        \n\nNulla id lectus metus. Maecenas a lorem in odio auctor facilisis non vitae nunc. Sed malesuada volutpat massa. Praesent sit amet lacinia augue, mollis tempor dolor.
+        Đối với PC : Vệ sinh Miễn Phí cho mọi khách hàng , không cần Build máy tại Tin Học Ngôi Sao vẫn được tham gia
+        \n\nĐối với Laptop : Vệ sinh Miễn Phí cho các khách hàng đã mua Laptop tại Tin Học Ngôi Sao
     </string>
 
     <string name="long_lorem_ipsum_2">

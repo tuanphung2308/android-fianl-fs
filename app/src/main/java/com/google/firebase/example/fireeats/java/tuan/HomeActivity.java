@@ -236,7 +236,7 @@ public class HomeActivity extends AppCompatActivity {
                         viewPager.setCurrentItem(3);
                         break;
                 }
-                iv.setColorFilter(getResources().getColor(R.color.light_green_500), PorterDuff.Mode.SRC_IN);
+                iv.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
             }
         }
     }

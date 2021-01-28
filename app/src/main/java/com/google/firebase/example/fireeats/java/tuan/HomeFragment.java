@@ -24,7 +24,7 @@ import java.util.List;
 
 import static com.google.firebase.example.fireeats.java.tuan.ShoppingProductAdvDetails.KEY_RESTAURANT_ID;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements AdapterSnapGeneric.OnItemClickListener {
     private static final String KEY_CATEGORY_ID = "CATEGORY";
     private LinearLayout linear1, linear2, linear3;
 
@@ -178,8 +178,9 @@ public class HomeFragment extends Fragment {
 
         // generate data
         List<Image> items = DataGenerator.getImageDate(getActivity()).subList(0, 5);
-
-        recyclerView.setAdapter(new AdapterSnapGeneric(getActivity(), items, R.layout.item_snap_full));
+        AdapterSnapGeneric adapterSnapGeneric = new AdapterSnapGeneric(getActivity(), items, R.layout.item_snap_full);
+        adapterSnapGeneric.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapterSnapGeneric);
         recyclerView.setOnFlingListener(null);
 
         progressBar.setMax(items.size());
@@ -192,5 +193,12 @@ public class HomeFragment extends Fragment {
                 progressBar.setProgress(position + 1);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(View view, Image obj, int position) {
+        Intent intent = new Intent(getActivity(), ArticleSimple.class);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 }
