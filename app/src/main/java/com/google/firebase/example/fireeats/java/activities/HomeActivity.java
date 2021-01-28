@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
 
                         // Log and toast
                         Log.d("FIREBASE TOKEN FUCK YOU", token);
-                        Toast.makeText(HomeActivity.this, token, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(HomeActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -224,7 +224,7 @@ public class HomeActivity extends AppCompatActivity {
 
         for (ImageView iv : menu_nav) {
             if (iv.getId() == R.id.menu_nav_1) {
-                iv.setColorFilter(getResources().getColor(R.color.light_green_500), PorterDuff.Mode.SRC_IN);
+                iv.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
                 break;
             }
         }

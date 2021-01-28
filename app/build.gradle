@@ -120,6 +120,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
