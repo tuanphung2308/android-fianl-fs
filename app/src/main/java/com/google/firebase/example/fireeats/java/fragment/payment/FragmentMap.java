@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.example.fireeats.R;
 import com.google.firebase.example.fireeats.java.helper.TaskDirectionRequest;
 
+import java.io.IOException;
+import java.util.List;
+
 public class FragmentMap extends Fragment implements OnMapReadyCallback{
 
     private GoogleMap mMap;
@@ -39,6 +44,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
     private LatLng deliveryAddress;
     private LatLng courierLocation;
     private Marker courierMarker;
+    private Geocoder geocoder;
 
     private long UPDATE_INTERVAL = 10*1000; // 10 seconds
     private long FASTEST_INTERVAL = 2*1000; // 10 seconds
@@ -64,6 +70,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        geocoder = new Geocoder(getActivity());
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         // TODO: INITIALIZE USER ADDRESS HERE
         // deliveryAddress = ????
@@ -75,6 +82,29 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
     public void updateCourierLocation(){
         //TODO: ADD FIRESTORE GET COURIER LOCATION HERE
         //courierLocation = newLocation;
+    }
+
+    public LatLng convertAddressToLatLng(String fullAddress){
+        List<Address> addressList;
+        LatLng p1;
+        if (geocoder == null){
+            geocoder = new Geocoder(this.getActivity());
+        }
+
+        try {
+            addressList = geocoder.getFromLocationName(fullAddress, 5);
+            if(addressList == null){
+                return null;
+            }
+            Address location = addressList.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            return p1;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+        }
+        return null;
     }
 
     @SuppressLint({"RestrictedApi", "MissingPermission"})
@@ -106,6 +136,8 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback{
         }, null);
 
     }
+
+
 
     // Used to generate API request to get route from courier to customer's address
     private String buildDirectionRequestUrl(LatLng origin, LatLng destination) {
