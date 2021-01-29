@@ -137,16 +137,16 @@ public class ProductDetailActivity extends AppCompatActivity
                 .load(product.getPhoto())
                 .into(restaurantImage);
         Glide.with(image1.getContext())
-                .load(product.getPhoto())
+                .load(product.getPhoto1())
                 .into(image1);
         Glide.with(image2.getContext())
-                .load(product.getPhoto())
+                .load(product.getPhoto2())
                 .into(image2);
         Glide.with(image3.getContext())
-                .load(product.getPhoto())
+                .load(product.getPhoto3())
                 .into(image3);
         Glide.with(image4.getContext())
-                .load(product.getPhoto())
+                .load(product.getPhoto4())
                 .into(image4);
 
         FloatingActionButton subBtn = findViewById(R.id.fab_qty_sub);
