@@ -59,6 +59,8 @@ public class ProductDetailActivity extends AppCompatActivity
 
         // Get restaurant ID from extras
         String restaurantId = getIntent().getExtras().getString(KEY_RESTAURANT_ID);
+        Log.e("WANGNOOBPRODUCT", restaurantId);
+
         if (restaurantId == null) {
             throw new IllegalArgumentException("Must pass extra " + KEY_RESTAURANT_ID);
         }
